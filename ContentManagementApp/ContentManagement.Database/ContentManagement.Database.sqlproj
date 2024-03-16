@@ -59,6 +59,8 @@
   <ItemGroup>
     <Folder Include="Properties" />
     <Folder Include="Publish Locations" />
+    <Folder Include="dto" />
+    <Folder Include="dto\Tables" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Locations\ContentManagement.Database.publish.xml" />
