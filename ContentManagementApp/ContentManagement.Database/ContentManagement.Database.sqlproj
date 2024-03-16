@@ -65,6 +65,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Locations\ContentManagement.Database.publish.xml" />
+    <None Include="Database Diagram\ContentManagementDB_Diagram.png" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dto\Tables\People.sql" />
