@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentManagement.Repositor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentManagement.API", "ContentManagement.API\ContentManagement.API.csproj", "{21D10EE5-CC49-4486-9EFA-2E4519682DCE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentManagement.WPF", "ContentManagement.WPF\ContentManagement.WPF.csproj", "{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{21D10EE5-CC49-4486-9EFA-2E4519682DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21D10EE5-CC49-4486-9EFA-2E4519682DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21D10EE5-CC49-4486-9EFA-2E4519682DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
