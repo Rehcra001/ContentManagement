@@ -61,6 +61,7 @@
     <Folder Include="Publish Locations" />
     <Folder Include="dto" />
     <Folder Include="dto\Tables" />
+    <Folder Include="Database Diagram" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Locations\ContentManagement.Database.publish.xml" />
