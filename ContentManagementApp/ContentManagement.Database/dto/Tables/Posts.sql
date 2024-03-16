@@ -1,0 +1,16 @@
+﻿CREATE TABLE [dbo].[Posts]
+(
+	Id INT NOT NULL PRIMARY KEY IDENTITY,
+	AuthorId INT NOT NULL,
+	Title NVARCHAR(100) NOT NULL,
+	Summary NVARCHAR(250) NULL,
+	PostContent NVARCHAR(MAX) NULL,
+	CategoryId INT NULL,
+	IsPublished BIT DEFAULT(0) NOT NULL,
+	CreatedOn DATETIME2 DEFAULT(GETDATE()) NOT NULL,
+	LastModified DATETIME2 NULL,
+	PublishedOn DATETIME2 NULL,
+	CONSTRAINT FK_Posts_People_AuthorId FOREIGN KEY (AuthorId) REFERENCES dbo.People(Id),
+	CONSTRAINT FK_Posts_Categories_CategoryId FOREIGN KEY (CategoryId) REFERENCES dbo.Categories(Id)
+)
+ 

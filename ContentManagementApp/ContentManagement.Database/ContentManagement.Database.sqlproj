@@ -65,4 +65,17 @@
   <ItemGroup>
     <None Include="Publish Locations\ContentManagement.Database.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Build Include="dto\Tables\People.sql" />
+    <Build Include="dto\Tables\Categories.sql" />
+    <Build Include="dto\Tables\Posts.sql" />
+    <Build Include="dto\Tables\VisualContent.sql" />
+    <Build Include="dto\Tables\PostVisualContent.sql" />
+    <Build Include="dto\Tables\SubCategories.sql" />
+    <Build Include="dto\Tables\PostSubCategories.sql" />
+    <Build Include="dto\Tables\Tags.sql" />
+    <Build Include="dto\Tables\PostTags.sql" />
+    <Build Include="dto\Tables\PostComments.sql" />
+    <Build Include="dto\Tables\Comments.sql" />
+  </ItemGroup>
 </Project>

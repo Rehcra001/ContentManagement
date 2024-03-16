@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[PostTags]
+(
+	Id INT NOT NULL PRIMARY KEY IDENTITY,
+	PostId INT NOT NULL,
+	TagId INT NOT NULL,
+	CONSTRAINT FK_PostTags_Tags_TagId FOREIGN KEY (TagId) REFERENCES dbo.Tags(Id),
+	CONSTRAINT FK_PostTags_Posts_PostId FOREIGN KEY (PostId) REFERENCES dbo.Posts(Id)
+)
