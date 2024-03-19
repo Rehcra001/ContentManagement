@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components.Routing;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Antiforgery;
 
 namespace ContentManagement.BlazorServer.Components.Layout
 {
@@ -12,21 +13,25 @@ namespace ContentManagement.BlazorServer.Components.Layout
         [Inject]
         public IJSRuntime JSRuntime { get; set; }
 
+        [Inject]
+        public IAntiforgery Antiforgery { get; set; }
+
         private int ViewportWidth { get; set; }
         private int ViewportHeight { get; set; }
 
-        private string? _currentUrl;
+        private string? currentUrl;
         private bool _menuIsOpen = false;
+        private const int CHANGE_WIDTH = 992;
 
         protected override void OnInitialized()
         {
-            _currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
+            currentUrl = NavigationManager.ToBaseRelativePath(NavigationManager.Uri);
             NavigationManager.LocationChanged += OnLocationChanged;
         }
 
         private void OnLocationChanged(object? sender, LocationChangedEventArgs e)
         {
-            _currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
+            currentUrl = NavigationManager.ToBaseRelativePath(e.Location);
             StateHasChanged();
         }
 

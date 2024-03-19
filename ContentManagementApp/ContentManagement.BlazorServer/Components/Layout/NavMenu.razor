@@ -1,51 +1,87 @@
 ﻿@rendermode RenderMode.InteractiveServer
 
 
-<nav class="d-flex justify-content-between navbar-dark bg-dark py-3 px-5 align-content-center">
-    <a class="navbar-brand fs-5" href="/">
+<nav class="d-flex navbar-dark bg-dark py-3 px-5 align-content-center">
+    <a class="navbar-brand me-auto fs-5" href="/">
         <i class="bi bi-house-door-fill fs-3" />
         My Company Blog
     </a>
 
-    @if (ViewportWidth > 900)
-    {
-            <AuthorizeView>
-                <Authorized>
-                    <div class="">
-                        <NavLink class="nav-item text-white ps-3" href="account/manage">
-                            <span class="bi bi-person-check pe-1 fs-4"></span>@context.User.Identity?.Name
-                        </NavLink>
-                        <form action="Account/Logout" method="post" class="d-inline-block ps-3">
-                            <AntiforgeryToken />
-                            <input type="hidden" name="ReturnUrl" value="@_currentUrl" />
-                            <button type="submit" class="nav-item btn btn-light">
-                                <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
-                            </button>
-                        </form>
-                    </div>
-                </Authorized>
-                <NotAuthorized>
+    @if (ViewportWidth > CHANGE_WIDTH)
+    { 
+        _menuIsOpen = false;
+        <AuthorizeView>
+            <Authorized>
                 <div class="">
-                        <NavLink class="nav-item text-white ps-3" href="account/login">
-                            <span class="bi bi-box-arrow-in-right pe-1 fs-4"></span>Login
-                        </NavLink>
-                        <NavLink class="nav-item text-white ps-3" href="account/Register">
-                            <span class="bi bi-person-vcard pe-1 fs-4"></span>Register
-                        </NavLink>
-                    </div>
-                </NotAuthorized>
-            </AuthorizeView>
+                    <NavLink class="nav-item text-white ps-3" href="account/manage">
+                        <span class="bi bi-person-check pe-1 fs-4"></span>@context.User.Identity?.Name
+                    </NavLink>                    
+                </div>
+            </Authorized>
+            <NotAuthorized>
+                <div class="">
+                    <NavLink class="nav-item text-white ps-3" href="account/login">
+                        <span class="bi bi-box-arrow-in-right pe-1 fs-4"></span>Login
+                    </NavLink>
+                    <NavLink class="nav-item text-white ps-3" href="account/Register">
+                        <span class="bi bi-person-vcard pe-1 fs-4"></span>Register
+                    </NavLink>
+                </div>
+            </NotAuthorized>
+        </AuthorizeView>
     }
     else
     {
-        <div class="">
-            <button @onclick="Menu_Click" class="navbar-toggler text-end" type="button">
+            <button @onclick="Menu_Click" class="navbar-toggler text-end fs-3" type="button">
                 <span class="navbar-toggler-icon"></span>
             </button>
-        </div>
-        
     }
 
+    <AuthorizeView>
+        <Authorized>
+            <div class="nav-item px-3 justify-content-end">
+                <form action="Account/Logout" method="post" class="nave-item  btn btn-light">
+                    <AntiforgeryToken />
+                    <input type="hidden" name="ReturnUrl" value="@currentUrl" />
+                    <button type="submit" class="nav-link">
+                        <span class="bi bi-arrow-bar-left-nav-menu" aria-hidden="true"></span> Logout
+                    </button>
+                </form>
+            </div>
+        </Authorized>
+    </AuthorizeView>
 </nav>
+
+@if (_menuIsOpen && ViewportWidth < CHANGE_WIDTH)
+{
+
+    <AuthorizeView>
+        <Authorized>
+            <div class="container bg-dark-subtle">
+                <div class="row pt-1 pb-1">
+                    <NavLink class="nav-item text-dark ps-5" href="account/manage">
+                        <span class="bi bi-person-check pe-1 fs-4"></span>@context.User.Identity?.Name
+                    </NavLink>
+                </div>
+
+            </div>
+        </Authorized>
+
+        <NotAuthorized>
+            <div class="container bg-dark-subtle">
+                <div class="row pt-1 pb-1 border-bottom border-dark">
+                    <NavLink class="nav-item text-dark ps-5" href="account/login">
+                        <span class="bi bi-box-arrow-in-right pe-3 fs-3"></span>Login
+                    </NavLink>
+                </div>
+                <div class="row pt-1 pb-2 border-bottom border-dark">
+                    <NavLink class="nav-item text-dark ps-5" href="account/Register">
+                        <span class="bi bi-person-vcard pe-3 fs-3"></span>Register
+                    </NavLink>
+                </div>
+            </div>
+        </NotAuthorized>
+    </AuthorizeView>
+}
 
 
