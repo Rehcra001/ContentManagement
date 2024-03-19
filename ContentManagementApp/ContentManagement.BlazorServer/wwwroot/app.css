@@ -1,6 +1,12 @@
-body {
+
+html {
     font-family: Arial, Helvetica, sans-serif;
+    background: #1f242b;
+}
+
+body {
     background: #FFF;
+    height: 100vh;
 }
 
 h1:focus {
