@@ -5,33 +5,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <base href="/" />
-    
-    <link href="/bootstrap/bootstrap.css" rel="stylesheet" />
     <link rel="stylesheet" href="app.css" />
-    <link href="/bootstrap/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="ContentManagement.BlazorServer.styles.css" />
     <HeadOutlet />
 </head>
 
-<body class="container">
-    
+<body>
     <Routes />
     <script src="_framework/blazor.web.js"></script>
-    <script>
-        
-        window.registerViewportChangeCallback = (dotnetHelper) => {
-            window.addEventListener('load', () => {
-                dotnetHelper.invokeMethodAsync('OnResize', window.innerWidth, window.innerHeight);
-            });
-            window.addEventListener('resize', () => {
-                dotnetHelper.invokeMethodAsync('OnResize', window.innerWidth, window.innerHeight);
-            });
-        }
-        function getWidth() {
-            console.log(window.innerWidth);
-            return window.innerWidth;
-        }
-    </script>
 </body>
 
 </html>
