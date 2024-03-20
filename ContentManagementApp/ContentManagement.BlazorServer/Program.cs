@@ -1,6 +1,9 @@
 using ContentManagement.BlazorServer.Components;
 using ContentManagement.BlazorServer.Components.Account;
 using ContentManagement.BlazorServer.Data;
+using ContentManagement.BlazorServer.Options;
+using ContentManagement.BlazorServer.Services;
+using ContentManagement.BlazorServer.Services.Contracts;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +38,10 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddDefaultTokenProviders();
 
 builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+
+//Add email service
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 
 var app = builder.Build();
 
