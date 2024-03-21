@@ -37,7 +37,22 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
     .AddSignInManager()
     .AddDefaultTokenProviders();
 
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+//builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
+builder.Services.AddSingleton<IEmailSender<ApplicationUser>, EmailService>();
+
+//The default inactivity timeout is 14 days. The following code sets the inactivity timeout to 2 hours with sliding expiration:
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.ExpireTimeSpan = TimeSpan.FromHours(2);
+    options.SlidingExpiration = true;
+});
+
+
+//The following code changes all data protection tokens timeout period to 3 hours:
+//builder.Services.Configure<DataProtectionTokenProviderOptions>(options =>
+//{
+//    options.TokenLifespan = TimeSpan.FromHours(3);
+//});
 
 //Add email service
 builder.Services.AddScoped<IEmailService, EmailService>();
