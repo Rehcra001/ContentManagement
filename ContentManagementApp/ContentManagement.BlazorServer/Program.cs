@@ -64,6 +64,14 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseMigrationsEndPoint();
+
+    //Seed roles for development
+    RoleManager<IdentityRole> adminRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>();
+    RoleManager<IdentityRole> authorRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>();
+    RoleManager<IdentityRole> userRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>();
+    UserManager<ApplicationUser> defaultAdminManager = builder.Services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
+
+    await SeedRoles.Seed(adminRoleManager, authorRoleManager, userRoleManager, defaultAdminManager);
 }
 else
 {
