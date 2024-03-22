@@ -69,9 +69,11 @@ namespace ContentManagement.BlazorServer.Services
             throw new NotImplementedException();
         }
 
-        public Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink)
+        public async Task SendPasswordResetLinkAsync(ApplicationUser user, string email, string resetLink)
         {
-            throw new NotImplementedException();
+            string subject = "Confirm your email";
+            string body = $"Please reset your password by <a href='{resetLink}'>clicking here.</a>";
+            await SendEmailAsync(email, subject, body);
         }
     }
 }
