@@ -15,11 +15,12 @@
         </p>
         <form action="Account/Manage/DownloadPersonalData" method="post">
             <AntiforgeryToken />
-            <button class="btn btn-primary" type="submit">Download</button>
+            <button class="btn btn-dark me-5" type="submit">Download</button>
+            <a href="Account/Manage/DeletePersonalData" class="btn btn-outline-danger">Delete</a>
         </form>
-        <p>
+       @*  <p >
             <a href="Account/Manage/DeletePersonalData" class="btn btn-danger">Delete</a>
-        </p>
+        </p> *@
     </div>
 </div>
 

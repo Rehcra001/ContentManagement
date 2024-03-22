@@ -4069,7 +4069,7 @@ textarea.form-control-lg {
     padding: var(--bs-nav-link-padding-y) var(--bs-nav-link-padding-x);
     font-size: var(--bs-nav-link-font-size);
     font-weight: var(--bs-nav-link-font-weight);
-    color: var(--bs-nav-link-color);
+    color: var(--bs-dark);
     text-decoration: none;
     background: 0 0;
     border: 0;
@@ -4144,7 +4144,7 @@ textarea.form-control-lg {
 
         .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
             color: var(--bs-nav-pills-link-active-color);
-            background-color: var(--bs-nav-pills-link-active-bg)
+            background-color: var(--bs-dark);
         }
 
 .nav-underline {
