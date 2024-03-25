@@ -1,6 +1,7 @@
 ﻿@page "/Account/Manage"
 
 @using System.ComponentModel.DataAnnotations
+@using ContentManagement.BlazorServer.Data.UserValidators
 @using Microsoft.AspNetCore.Identity
 @using ContentManagement.BlazorServer.Data
 
@@ -23,11 +24,19 @@
                 <input type="text" value="@username" class="form-control" placeholder="Please choose your username." disabled />
                 <label for="username" class="form-label">Username</label>
             </div>
+
+            <div class="form-floating mb-3">
+                <InputText id="displayname" @bind-Value="Input.DisplayName" class="form-control" placeholder="Display name." disabled />
+                <label for="displayname" class="form-label">Display Name</label>
+                <ValidationMessage For="() => Input.DisplayName" class="text-danger" />
+            </div>
+
             <div class="form-floating mb-3">
                 <InputText id="firstname" @bind-Value="Input.FirstName" class="form-control" placeholder="Please enter your first name." />
                 <label for="firstname" class="form-label">First Name</label>
                 <ValidationMessage For="() => Input.FirstName" class="text-danger" />
             </div>
+
             <div class="form-floating mb-3">
                 <InputText id="lastname" @bind-Value="Input.LastName" class="form-control" placeholder="Please enter your last name." />
                 <label for="lastname" class="form-label">Last Name</label>
@@ -42,6 +51,7 @@
 @code {
     private ApplicationUser user = default!;
     private string? username;
+    private string? displayname;
     private string? firstname;
     private string? lastname;
 
@@ -58,9 +68,11 @@
         user = await UserAccessor.GetRequiredUserAsync(HttpContext);
         username = await UserManager.GetUserNameAsync(user);
 
+        displayname ??= user.DisplayName;
         firstname ??= user.FirstName;
         lastname ??= user.LastName;
 
+        Input.DisplayName ??= displayname;
         Input.FirstName ??= firstname;
         Input.LastName ??= lastname;
 
@@ -70,6 +82,7 @@
     {
         if (Input.FirstName != firstname || Input.LastName != lastname)
         {
+            
             user.FirstName = Input.FirstName;
             user.LastName = Input.LastName;
 
@@ -82,6 +95,11 @@
 
     private sealed class InputModel
     {
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [Display(Name = "Display Name")]
+        public string? DisplayName { get; set; }
+
         [StringLength(100)]
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
