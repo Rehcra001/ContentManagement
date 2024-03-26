@@ -12,8 +12,16 @@ BEGIN
 			--Add a new person
 			IF NOT EXISTS (SELECT * FROM dbo.People WHERE UserName = @UserName)
 			BEGIN
+				DECLARE @Id INT;
+				
 				INSERT INTO dbo.People (UserName, DisplayName, Role)
 				VALUES (@UserName, @DisplayName, @Role);
+
+				SET @Id = SCOPE_IDENTITY();
+
+				SELECT Id, UserName, DisplayName, [Role]
+				FROM dbo.People
+				WHERE Id = @Id;
 			END
 
 			ELSE
