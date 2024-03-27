@@ -1,0 +1,15 @@
+﻿using ContentManagement.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ContentManagement.Repositories.Contracts
+{
+    public interface IPersonRepository
+    {
+        Task<PersonModel> AddPerson(PersonModel person);
+        Task<bool> PersonExists(string username);
+    }
+}

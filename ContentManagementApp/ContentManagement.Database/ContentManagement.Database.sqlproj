@@ -62,6 +62,7 @@
     <Folder Include="dto" />
     <Folder Include="dto\Tables" />
     <Folder Include="Database Diagram" />
+    <Folder Include="dto\Stored Procedures" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Locations\ContentManagement.Database.publish.xml" />
@@ -79,5 +80,7 @@
     <Build Include="dto\Tables\PostTags.sql" />
     <Build Include="dto\Tables\PostComments.sql" />
     <Build Include="dto\Tables\Comments.sql" />
+    <Build Include="dto\Stored Procedures\usp_AddPerson.sql" />
+    <Build Include="dto\Stored Procedures\usp_PersonExists.sql" />
   </ItemGroup>
 </Project>

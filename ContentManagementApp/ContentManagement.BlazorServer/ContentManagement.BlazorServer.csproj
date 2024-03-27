@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ContentManagement.Models\ContentManagement.Models.csproj" />
+    <ProjectReference Include="..\ContentManagement.Repositories\ContentManagement.Repositories.csproj" />
   </ItemGroup>
 
 </Project>

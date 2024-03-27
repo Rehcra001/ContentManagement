@@ -9,8 +9,15 @@ namespace ContentManagement.BlazorServer.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            //Set unique constrainta
             builder.Entity<ApplicationUser>()
                 .HasAlternateKey(k => k.Email);
+            builder.Entity<ApplicationUser>()
+                .HasAlternateKey(k => k.UserName);
+            builder.Entity<ApplicationUser>()
+                .HasAlternateKey(k => k.DisplayName);
+
 
         }
     }

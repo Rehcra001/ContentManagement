@@ -66,7 +66,10 @@ namespace ContentManagement.BlazorServer.Data
                 {
                     UserName = "admin@blog.com",
                     Email = "admin@blog.com",
-                    EmailConfirmed = true
+                    EmailConfirmed = true,
+                    FirstName = "System",
+                    LastName = "Admin",
+                    DisplayName = "Administrator"
                 };
                 IdentityResult identityResult = await defaultAdminManager.CreateAsync(defaultAdministrator, "Password1!");
 

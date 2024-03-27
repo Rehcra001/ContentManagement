@@ -4,6 +4,8 @@ using ContentManagement.BlazorServer.Data;
 using ContentManagement.BlazorServer.Options;
 using ContentManagement.BlazorServer.Services;
 using ContentManagement.BlazorServer.Services.Contracts;
+using ContentManagement.Repositories;
+using ContentManagement.Repositories.Contracts;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
@@ -59,6 +61,15 @@ builder.Services.ConfigureApplicationCookie(options =>
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.Configure<EmailConfiguration>(builder.Configuration.GetSection("EmailConfiguration"));
 
+//Data Connection
+builder.Services.AddScoped<IRelationalDBConnection, RelationalDBConnection>();
+
+//Repositories
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+
+//Services
+builder.Services.AddScoped<IPersonService, PersonService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -67,10 +78,10 @@ if (app.Environment.IsDevelopment())
     app.UseMigrationsEndPoint();
 
     //Seed roles for development
-    RoleManager<IdentityRole> adminRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>();
-    RoleManager<IdentityRole> authorRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>();
-    RoleManager<IdentityRole> userRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>();
-    UserManager<ApplicationUser> defaultAdminManager = builder.Services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>();
+    RoleManager<IdentityRole> adminRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>()!;
+    RoleManager<IdentityRole> authorRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>()!;
+    RoleManager<IdentityRole> userRoleManager = builder.Services.BuildServiceProvider().GetService<RoleManager<IdentityRole>>()!;
+    UserManager<ApplicationUser> defaultAdminManager = builder.Services.BuildServiceProvider().GetService<UserManager<ApplicationUser>>()!;
 
     await SeedRoles.Seed(adminRoleManager, authorRoleManager, userRoleManager, defaultAdminManager);
 }
