@@ -17,6 +17,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentManagement.API", "Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentManagement.WPF", "ContentManagement.WPF\ContentManagement.WPF.csproj", "{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}"
 EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "ContentManagement.LogsDatabase", "ContentManagement.LogsDatabase\ContentManagement.LogsDatabase.sqlproj", "{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,12 @@ Global
 		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8969B210-137D-4BDB-B9D4-FE0FFC9BF0E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38820957-BEBD-4E37-B39C-FBE7F0D58BEC}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

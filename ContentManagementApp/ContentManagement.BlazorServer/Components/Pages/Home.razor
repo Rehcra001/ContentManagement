@@ -1,7 +1,21 @@
 ﻿@page "/"
 
+@using Serilog
+@using ILogger = Serilog.ILogger
+
+@inject ILogger Logger
+
 <PageTitle>Home</PageTitle>
 
 <h1>Hello, world!</h1>
 
 Welcome to your new app.
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        Logger.Information("Application Initialized");
+        Log.CloseAndFlush();
+    }
+}

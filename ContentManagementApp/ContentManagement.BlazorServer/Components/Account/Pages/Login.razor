@@ -6,14 +6,17 @@
 @using Microsoft.AspNetCore.Authentication
 @using Microsoft.AspNetCore.Identity
 @using ContentManagement.BlazorServer.Data
+@using Serilog
+@using ILogger = Serilog.ILogger
 
 @inject SignInManager<ApplicationUser> SignInManager
-@inject ILogger<Login> Logger
 @inject NavigationManager NavigationManager
 @inject IdentityRedirectManager RedirectManager
 @inject IPersonService PersonService
 @inject IdentityUserAccessor UserAccessor
 @inject UserManager<ApplicationUser> UserManager
+@inject ILogger Logger
+
 
 <PageTitle>Log In</PageTitle>
 
@@ -81,6 +84,8 @@
     [SupplyParameterFromQuery]
     private string? ReturnUrl { get; set; }
 
+
+
     protected override async Task OnInitializedAsync()
     {
         if (HttpMethods.IsGet(HttpContext.Request.Method))
@@ -106,20 +111,9 @@
             //If not then add them
             if (exists == false)
             {
-                try
-                {
-                    await CreatePerson(user);
-                }
-                catch (Exception)
-                {
-                    // TODO - Add logging functionality
-                    throw;
-                }
-
+                await CreatePerson(user);
             }
 
-
-            Logger.LogInformation("User logged in.");
             RedirectManager.RedirectTo(ReturnUrl);
         }
         else if (result.RequiresTwoFactor)
@@ -130,13 +124,15 @@
         }
         else if (result.IsLockedOut)
         {
-            Logger.LogWarning("User account locked out.");
+            var user = await UserAccessor.GetRequiredUserAsync(HttpContext);
+            Logger.Information("User: {user} was locked out", user.UserName);
             RedirectManager.RedirectTo("Account/Lockout");
         }
         else
         {
             errorMessage = "Error: Invalid login attempt.";
         }
+        await Log.CloseAndFlushAsync();
     }
 
     private async Task CreatePerson(ApplicationUser user)
@@ -153,11 +149,12 @@
         {
             await PersonService.AddPerson(person);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            //Log exception
+            Logger.Error(ex.Message, ex);
             //sign the user out
             await SignInManager.SignOutAsync();
-            throw new Exception("An unexpected error occured");
         }
     }
 

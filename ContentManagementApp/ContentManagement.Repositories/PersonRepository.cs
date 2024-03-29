@@ -2,17 +2,21 @@
 using ContentManagement.Repositories.Contracts;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using Serilog;
 using System.Data;
+using ILogger = Serilog.ILogger;
 
 namespace ContentManagement.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
-        private IRelationalDBConnection _sqlConnection;
+        private readonly IRelationalDBConnection _sqlConnection;
+        private readonly ILogger _logger;
 
-        public PersonRepository(IRelationalDBConnection sqlConnection)
+        public PersonRepository(IRelationalDBConnection sqlConnection, ILogger logger)
         {
             _sqlConnection = sqlConnection;
+            _logger = logger;
         }
 
         public async Task<PersonModel> AddPerson(PersonModel person)
@@ -21,21 +25,30 @@ namespace ContentManagement.Repositories
             parameters.Add("@UserName", person.UserName, DbType.String);
             parameters.Add("@DisplayName", person.DisplayName, DbType.String);
             parameters.Add("@Role", person.Role, DbType.String);
-
+            
             using (SqlConnection connection = _sqlConnection.sqlConnection())
             {
-                var result = await connection.QuerySingleOrDefaultAsync<PersonModel>("dbo.usp_AddPerson", parameters, commandType: CommandType.StoredProcedure);
+                try
+                {
+                    var result = await connection.QuerySingleOrDefaultAsync<PersonModel>("dbo.usp_AddPerson", parameters, commandType: CommandType.StoredProcedure);
 
-                if (result == null)
-                {
-                    return new PersonModel();
+                    if (result == null)
+                    {
+                        return new PersonModel();
+                    }
+                    else
+                    {
+                        person.Id = result.Id;
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    person.Id = result.Id;
+                    _logger.Information(ex.Message);
+                    throw;
                 }
+                
             }
-
+            await Log.CloseAndFlushAsync();
             return person;
         }
 

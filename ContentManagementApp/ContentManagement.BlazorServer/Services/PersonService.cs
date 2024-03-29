@@ -2,16 +2,21 @@
 using ContentManagement.Models;
 using ContentManagement.Models.ValidationClasses;
 using ContentManagement.Repositories.Contracts;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace ContentManagement.BlazorServer.Services
 {
     public class PersonService : IPersonService
     {
-        private IPersonRepository _personRepository;
+        private readonly IPersonRepository _personRepository;
+        private readonly ILogger _logger;
 
-        public PersonService(IPersonRepository personRepository)
+
+        public PersonService(IPersonRepository personRepository, ILogger logger)
         {
             _personRepository = personRepository;
+            _logger = logger;
         }
 
         public async Task<PersonModel> AddPerson(PersonModel person)
@@ -27,15 +32,27 @@ namespace ContentManagement.BlazorServer.Services
                     foreach(ValidationMessage message in validationErrors)
                     {
                         // TODO - Log validation errors
+                        _logger.Error("Validation Error: " + message.ToString());
+
                     }
 
-                    throw new Exception("Error saving person");
-                    // TODO - Add logging functionality
+                    throw new Exception("Validation Errors");
                 }
 
                 //Add person
-                person = await _personRepository.AddPerson(person);
+                try
+                {
+                    person = await _personRepository.AddPerson(person);
+                    _logger.Information("Person Service: Person Added");
 
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex.Message);
+                    throw;
+                }
+
+                await Log.CloseAndFlushAsync();
                 return person;
             }
             catch (Exception e)

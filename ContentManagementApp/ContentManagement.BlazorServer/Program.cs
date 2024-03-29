@@ -10,8 +10,24 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+//Serilog
+var configuration = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json")
+        .Build();
+
+var logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(configuration)
+    .CreateLogger();
+
+//Serilog
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
+builder.Host.UseSerilog(logger);
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -70,6 +86,8 @@ builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 //Services
 builder.Services.AddScoped<IPersonService, PersonService>();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -104,6 +122,9 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
+
+app.UseSerilogRequestLogging();
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
@@ -113,3 +134,8 @@ app.MapRazorComponents<App>()
 app.MapAdditionalIdentityEndpoints();
 
 app.Run();
+
+
+
+
+
