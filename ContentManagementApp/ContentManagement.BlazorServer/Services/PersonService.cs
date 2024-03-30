@@ -31,7 +31,6 @@ namespace ContentManagement.BlazorServer.Services
 
                     foreach(ValidationMessage message in validationErrors)
                     {
-                        // TODO - Log validation errors
                         _logger.Error("Validation Error: " + message.ToString());
 
                     }
