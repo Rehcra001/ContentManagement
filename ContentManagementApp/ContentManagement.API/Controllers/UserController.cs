@@ -165,6 +165,69 @@ namespace ContentManagement.API.Controllers
 
         }
 
+        [HttpPost]
+        [AllowAnonymous] // TODO - Change to Authorize
+        [Route("ChangePassword")]
+        public async Task<ActionResult<string>> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
+        {
+            //Convert to model
+            ChangePasswordModel changePasswordModel = changePasswordDTO.ConvertToChangePasswordModel();
+
+            //Validate model
+            var changePasswordErrors = ValidationHelper.Validate(changePasswordModel);
+            if (changePasswordErrors.Count > 0)
+            {
+                //log
+                foreach (var error in changePasswordErrors)
+                {
+                    _logger.Error(error.ErrorMessage!);
+                }
+
+                return StatusCode(StatusCodes.Status400BadRequest, "Validation Errors: Please see log.");                
+            }
+
+
+            string? email = GetAuthorisedUserEmail(HttpContext);
+
+            if (String.IsNullOrWhiteSpace(email))
+            {
+                _logger.Error("Email address not found");
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+
+            //Email is unique in the system
+            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
+            string currentPassword = changePasswordModel.OldPassword;
+            string newPassword = changePasswordModel.NewPassword;
+
+            //Attempt to change password
+            var changePasswordResult = await _userManager.ChangePasswordAsync(user!, currentPassword, newPassword);
+            if (changePasswordResult.Succeeded == false)
+            {
+                foreach (var error in changePasswordResult.Errors)
+                {
+                    _logger.Error(error.Description);
+                }
+                return StatusCode(StatusCodes.Status500InternalServerError, "Error changing password.");
+            }
+
+            return Ok("Password Changed");
+        }
+
+        private static string? GetAuthorisedUserEmail(HttpContext ctx)
+        {
+            var userIdentity = ctx.User.Identity as ClaimsIdentity;
+            if (userIdentity.IsAuthenticated)
+            {
+                string? email = userIdentity.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+
+                return email;
+            }
+
+            return null;
+            
+        }
+
         private async Task<string> GenerateJSONWebToken(ApplicationUser? applicationUser)
         {
             SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));

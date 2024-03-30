@@ -28,5 +28,15 @@ namespace ContentManagement.API.Extensions
                 Password = userSignInDTO.Password
             };
         }
+
+        public static ChangePasswordModel ConvertToChangePasswordModel(this ChangePasswordDTO changePasswordDTO)
+        {
+            return new ChangePasswordModel
+            {
+                OldPassword = changePasswordDTO.OldPassword,
+                NewPassword = changePasswordDTO.NewPassword,
+                ConfirmPassword = changePasswordDTO.ConfirmPassword
+            };
+        }
     }
 }
