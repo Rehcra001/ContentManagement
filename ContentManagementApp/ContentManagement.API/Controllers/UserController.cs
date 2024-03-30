@@ -166,7 +166,7 @@ namespace ContentManagement.API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] // TODO - Change to Authorize
+        [Authorize]
         [Route("ChangePassword")]
         public async Task<ActionResult<string>> ChangePassword([FromBody] ChangePasswordDTO changePasswordDTO)
         {
