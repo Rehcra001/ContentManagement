@@ -3,14 +3,17 @@ using ContentManagement.API.LoginData;
 using ContentManagement.DTOs;
 using ContentManagement.Models;
 using ContentManagement.Models.ValidationClasses;
+using ContentManagement.Repositories.Contracts;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Ilogger = Serilog.ILogger;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
-using ContentManagement.Repositories.Contracts;
-using System;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Ilogger = Serilog.ILogger;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace ContentManagement.API.Controllers
 {
@@ -110,12 +113,87 @@ namespace ContentManagement.API.Controllers
             {
                 foreach (var error in userResult.Errors)
                 {
-                    // TODO - Log any errors
                     _logger.Error(error.Description);
                 }
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Error saving user to database");
             }
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("signin")]
+        public async Task<ActionResult<string>> SignIn([FromBody] UserSignInDTO userSignInDTO)
+        {
+            if (String.IsNullOrWhiteSpace(userSignInDTO.EmailAddress) || String.IsNullOrWhiteSpace(userSignInDTO.Password)){
+                return StatusCode(StatusCodes.Status400BadRequest);
+            }
+            // Convert to model
+            UserSignInModel userSignInModel = userSignInDTO.ConvertToUserSignInModel();
+
+            // Validate model
+            var signInErrors = ValidationHelper.Validate(userSignInModel);
+            if (signInErrors.Count > 0)
+            {
+                foreach (var error in signInErrors)
+                {
+                    _logger.Error(error.ErrorMessage!);
+                }
+
+                return StatusCode(StatusCodes.Status400BadRequest, "Validation Error: Please see logs");
+            }
+
+            string username = userSignInModel.EmailAddress!;
+            string password = userSignInModel.Password!;
+            // Attempt sign in
+            SignInResult signInResult = await _signInManager.PasswordSignInAsync(username, password, false, false);
+
+            // If successful
+            if (signInResult.Succeeded)
+            {
+                //create JWT Token and return
+                ApplicationUser? applicationUser = await _userManager.FindByNameAsync(username);
+
+                String JSONWebTokenAsString = await GenerateJSONWebToken(applicationUser);
+
+                return Ok(JSONWebTokenAsString);
+            }
+            else
+            {
+                return Unauthorized(userSignInDTO);
+            }
+
+        }
+
+        private async Task<string> GenerateJSONWebToken(ApplicationUser? applicationUser)
+        {
+            SymmetricSecurityKey symmetricSecurityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+
+            SigningCredentials credentials = new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256);
+
+            //claim = who is the person trying to to sign in claiming to be
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Email),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
+            };
+
+            IList<string> roles = await _userManager.GetRolesAsync(applicationUser);
+            claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+
+            //generate the token
+            JwtSecurityToken jwtSecurityToken = new JwtSecurityToken
+                (
+                    _config["Jwt:Issuer"],
+                    _config["Jwt:Issuer"],
+                    claims,
+                    null,
+                    expires: DateTime.UtcNow.AddDays(1),
+                    signingCredentials: credentials
+                );
+
+            return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         }
     }
 }

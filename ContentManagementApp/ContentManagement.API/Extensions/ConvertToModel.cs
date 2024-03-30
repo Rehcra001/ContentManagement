@@ -19,5 +19,14 @@ namespace ContentManagement.API.Extensions
                 Role = userRegistrationDTO.Role
             };
         }
+
+        public static UserSignInModel ConvertToUserSignInModel(this UserSignInDTO userSignInDTO)
+        {
+            return new UserSignInModel
+            {
+                EmailAddress = userSignInDTO.EmailAddress,
+                Password = userSignInDTO.Password
+            };
+        }
     }
 }
