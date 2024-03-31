@@ -3,9 +3,11 @@ using ContentManagement.WPF.Services;
 using ContentManagement.WPF.Services.Contracts;
 using ContentManagement.WPF.ViewModels;
 using ContentManagement.WPF.Views;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Windows;
 
 namespace ContentManagement.WPF
@@ -16,6 +18,20 @@ namespace ContentManagement.WPF
     public partial class App : Application
     {
         private readonly ServiceProvider _serviceProvider;
+
+        /// <summary>
+        /// Adds access to appsettings.json
+        /// </summary>
+        /// <returns>
+        /// Returns an IConfiguration
+        /// </returns>
+        private IConfiguration AddConfiguration()
+        {
+            IConfigurationBuilder builder = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json");
+            return builder.Build();
+        }
 
         public App()
         {
@@ -30,9 +46,13 @@ namespace ContentManagement.WPF
             services.AddSingleton<MainViewModel>();
             services.AddTransient<LoginViewModel>();
 
+            //Add appsettings.json Configuration
+            services.AddSingleton(AddConfiguration());
+
 
             //Services
             services.AddSingleton<INavigationService, NavigationService>();
+            services.AddSingleton<IHttpClientService, HttpClientService>();
 
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
 
