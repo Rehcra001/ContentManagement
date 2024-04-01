@@ -5,8 +5,6 @@ using ContentManagement.WPF.ViewModels;
 using ContentManagement.WPF.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System.Configuration;
-using System.Data;
 using System.IO;
 using System.Windows;
 
@@ -37,6 +35,7 @@ namespace ContentManagement.WPF
         {
             IServiceCollection services = new ServiceCollection();
 
+            
             //register views
             services.AddSingleton<MainView>(provider => new MainView
             {
@@ -53,6 +52,9 @@ namespace ContentManagement.WPF
             //Services
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IHttpClientService, HttpClientService>();
+            services.AddSingleton<IUserDetailService, UserDetailService>();
+            services.AddTransient<IUserService, UserService>();
+            services.AddTransient<IProcessJWTTokenService, ProcessJWTTokenService>();
 
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
 
