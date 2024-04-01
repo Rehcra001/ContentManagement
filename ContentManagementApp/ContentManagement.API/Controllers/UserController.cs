@@ -238,6 +238,9 @@ namespace ContentManagement.API.Controllers
             List<Claim> claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, applicationUser.Email),
+                new Claim(JwtRegisteredClaimNames.GivenName, applicationUser.FirstName),
+                new Claim(JwtRegisteredClaimNames.FamilyName, applicationUser.LastName),
+                new Claim("DisplayName", applicationUser.DisplayName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
             };
