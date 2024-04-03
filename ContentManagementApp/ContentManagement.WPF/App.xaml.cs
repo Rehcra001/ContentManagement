@@ -5,6 +5,8 @@ using ContentManagement.WPF.ViewModels;
 using ContentManagement.WPF.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
+using System.Configuration;
 using System.IO;
 using System.Windows;
 
@@ -31,11 +33,25 @@ namespace ContentManagement.WPF
             return builder.Build();
         }
 
+
+
         public App()
         {
+            //Serilog
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            var logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(configuration)
+                .CreateLogger();
+
             IServiceCollection services = new ServiceCollection();
 
-            
+            Log.Logger = logger;
+
+
             //register views
             services.AddSingleton<MainView>(provider => new MainView
             {
