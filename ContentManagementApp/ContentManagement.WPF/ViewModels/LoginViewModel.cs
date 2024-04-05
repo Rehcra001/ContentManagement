@@ -33,6 +33,9 @@ namespace ContentManagement.WPF.ViewModels
             NavigationService = navigationService;
             UserService = userService;
 
+            //Set logged
+            UserService.RaiseEventOnLoggedInChanged(false);
+
             LoginCommand = new RelayCommand(Login, CanLogin);
         }
 
@@ -64,7 +67,12 @@ namespace ContentManagement.WPF.ViewModels
                 if (loginSuccess)
                 {
                     Log.Information("Logged into WPF");
+                    UserService.RaiseEventOnLoggedInChanged(true);
                     //NavigationService.NavigateTo<HomeViewModel>
+                }
+                else
+                {
+                    UserService.RaiseEventOnLoggedInChanged(false);
                 }
             }
             catch (Exception ex)
