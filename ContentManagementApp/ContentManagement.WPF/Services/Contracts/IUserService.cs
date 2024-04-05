@@ -7,5 +7,8 @@ namespace ContentManagement.WPF.Services.Contracts
         Task<bool> RegisterNewUser(UserRegistrationDTO userRegistrationDTO);
         Task<bool> LoginUser(UserSignInDTO userSignInDTO);
         Task ChangeUserPassword(ChangePasswordDTO changePasswordDTO);
+
+        event Action<bool> OnLoggedInChanged;
+        void RaiseEventOnLoggedInChanged(bool isLoggedIn);
     }
 }

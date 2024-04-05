@@ -12,6 +12,8 @@ namespace ContentManagement.WPF.Services
         private readonly IUserDetailService _userDetailService;
         private readonly IProcessJWTTokenService _processJWTTokenService;
 
+        public event Action<bool> OnLoggedInChanged;
+
         public UserService(IHttpClientService httpClientService,
                            IUserDetailService userDetailService,
                            IProcessJWTTokenService processJWTTokenService)
@@ -20,6 +22,8 @@ namespace ContentManagement.WPF.Services
             _userDetailService = userDetailService;
             _processJWTTokenService = processJWTTokenService;
         }
+
+        
 
         public Task ChangeUserPassword(ChangePasswordDTO changePasswordDTO)
         {
@@ -50,6 +54,12 @@ namespace ContentManagement.WPF.Services
 
                 throw;
             }
+        }
+
+        public void RaiseEventOnLoggedInChanged(bool isLoggedIn)
+        {
+                //Has subscribers
+                OnLoggedInChanged?.Invoke(isLoggedIn);
         }
 
         public Task<bool> RegisterNewUser(UserRegistrationDTO userRegistrationDTO)
