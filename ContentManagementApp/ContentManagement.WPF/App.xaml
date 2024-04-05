@@ -2,7 +2,10 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:viewModels="clr-namespace:ContentManagement.WPF.ViewModels"
-             xmlns:views="clr-namespace:ContentManagement.WPF.Views">
+             xmlns:views="clr-namespace:ContentManagement.WPF.Views"
+             xmlns:adminViewModels="clr-namespace:ContentManagement.WPF.ViewModels.Administration"
+             xmlns:adminViews="clr-namespace:ContentManagement.WPF.Views.Administration">
+
     <Application.Resources>
         <ResourceDictionary>
             <DataTemplate DataType="{x:Type TypeName=viewModels:MainViewModel}">
@@ -13,6 +16,11 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type TypeName=viewModels:HomeViewModel}">
                 <views:HomeView/>
+            </DataTemplate>
+            
+            <!--Administration-->
+            <DataTemplate DataType="{x:Type TypeName=adminViewModels:NewUserViewModel}">
+                <adminViews:NewUserView/>
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>

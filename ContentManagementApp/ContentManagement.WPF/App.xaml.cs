@@ -2,6 +2,7 @@
 using ContentManagement.WPF.Services;
 using ContentManagement.WPF.Services.Contracts;
 using ContentManagement.WPF.ViewModels;
+using ContentManagement.WPF.ViewModels.Administration;
 using ContentManagement.WPF.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -61,6 +62,7 @@ namespace ContentManagement.WPF
             services.AddSingleton<MainViewModel>();
             services.AddTransient<LoginViewModel>();
             services.AddTransient<HomeViewModel>();
+            services.AddTransient<NewUserViewModel>();
 
             //Add appsettings.json Configuration
             services.AddSingleton(AddConfiguration());

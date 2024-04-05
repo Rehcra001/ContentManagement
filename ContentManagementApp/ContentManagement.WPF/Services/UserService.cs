@@ -2,6 +2,8 @@
 using ContentManagement.WPF.Services.Contracts;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Windows;
+using Log = Serilog.Log;
 
 
 namespace ContentManagement.WPF.Services
@@ -45,13 +47,14 @@ namespace ContentManagement.WPF.Services
                 else
                 {
                     var message = await httpResponseMessage.Content.ReadAsStringAsync();
-                    throw new Exception($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
+                    Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
+                    return false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 // TODO - Log exception
-
+                Log.Error("Login Error: " + ex.Message);
                 throw;
             }
         }

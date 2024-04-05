@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentManagement.WPF.ViewModels
+namespace ContentManagement.WPF.ViewModels.Administration
 {
-    public class HomeViewModel : ViewModel
+    public class NewUserViewModel : ViewModel
     {
     }
 }

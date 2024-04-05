@@ -1,5 +1,7 @@
 ﻿using ContentManagement.WPF.Core;
 using ContentManagement.WPF.Services.Contracts;
+using ContentManagement.WPF.ViewModels.Administration;
+using Log = Serilog.Log;
 
 namespace ContentManagement.WPF.ViewModels
 {
@@ -49,6 +51,7 @@ namespace ContentManagement.WPF.ViewModels
 
         //commands
         public RelayCommand LogoutCommand { get; set; }
+        public RelayCommand NavigateToAdminNewUserCommand { get; set; }
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
@@ -65,9 +68,26 @@ namespace ContentManagement.WPF.ViewModels
 
             //Commands
             LogoutCommand = new RelayCommand(Logout, CanLogout);
+            NavigateToAdminNewUserCommand = new RelayCommand(NavigateToAdminNewUser, CanNavigateToAdminNewUser);
+
 
             //Open log in page
             NavigationService.NavigateTo<LoginViewModel>();            
+        }
+
+        private bool CanNavigateToAdminNewUser(object obj)
+        {
+            string? role = UserDetailService.UserDetailModel.Role;
+            if (role != null & role.Equals("Administrator"))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void NavigateToAdminNewUser(object obj)
+        {
+            NavigationService.NavigateTo<NewUserViewModel>();
         }
 
         private bool CanLogout(object obj)
@@ -95,6 +115,7 @@ namespace ContentManagement.WPF.ViewModels
                 MenuState = SHOW;
                 UserName = UserDetailService.UserDetailModel.FirstName + " " + UserDetailService.UserDetailModel.LastName;
                 SetAdministrator();
+                Log.Information("{user} logged in.", UserDetailService.UserDetailModel.UserName);
                 NavigationService.NavigateTo<HomeViewModel>();
             }
             else

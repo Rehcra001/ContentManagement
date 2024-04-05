@@ -41,7 +41,7 @@ namespace ContentManagement.API.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous] // TODO - Change to Adminstrator role once working
+        [Authorize(Roles = "Administrator")] // TODO - Change to Adminstrator role once working
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] UserRegistrationDTO userDTO)
         {
@@ -64,17 +64,17 @@ namespace ContentManagement.API.Controllers
             // Add new user to Access database
             ApplicationUser applicationUser = new ApplicationUser
             {
-                Email = userDTO.EmailAddress,
+                Email = userRegistrationModel.EmailAddress,
                 EmailConfirmed = true,
-                UserName = userDTO.EmailAddress,
-                DisplayName = userDTO.DisplayName,
-                FirstName = userDTO.FirstName,
-                LastName = userDTO.LastName
+                UserName = userRegistrationModel.EmailAddress,
+                DisplayName = userRegistrationModel.DisplayName,
+                FirstName = userRegistrationModel.FirstName,
+                LastName = userRegistrationModel.LastName
             };
 
 
-            IdentityResult userResult = await _userManager.CreateAsync(applicationUser, userDTO.Password);
-            IdentityResult roleResult = await _userManager.AddToRoleAsync(applicationUser, userDTO.Role);
+            IdentityResult userResult = await _userManager.CreateAsync(applicationUser, userRegistrationModel.Password!);
+            IdentityResult roleResult = await _userManager.AddToRoleAsync(applicationUser, userRegistrationModel.Role!);
 
             //if successful
             if (userResult.Succeeded && roleResult.Succeeded)

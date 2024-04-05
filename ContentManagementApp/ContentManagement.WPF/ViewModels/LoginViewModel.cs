@@ -66,19 +66,24 @@ namespace ContentManagement.WPF.ViewModels
 
                 if (loginSuccess)
                 {
-                    Log.Information("Logged into WPF");
                     UserService.RaiseEventOnLoggedInChanged(true);
-                    //NavigationService.NavigateTo<HomeViewModel>
                 }
                 else
                 {
                     UserService.RaiseEventOnLoggedInChanged(false);
+                    MessageBox.Show("Please re-enter your credentials and try again. \r\nIf the problem persists, please contact your administrator.",
+                                    "Log In Error",
+                                    MessageBoxButton.OK,
+                                    MessageBoxImage.Error);
                 }
             }
             catch (Exception ex)
             {
                 Log.Error(ex, ex.Message);
-                MessageBox.Show("Log in Error: Please try again");
+                MessageBox.Show("Please re-enter your credentials and try again. \r\nIf the problem persists, please contact your administrator.",
+                                "Log In Error",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Error);
             }
         }
     }

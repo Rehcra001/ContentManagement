@@ -64,36 +64,37 @@
                             <StackPanel Orientation="Vertical"
                                         Visibility="{Binding AdminState}">
                                 <Button x:Name="btnAdministration"
-                                    Content="Administration"                                
-                                    Style="{StaticResource MenuButtonTheme}"
-                                    Click="btnMenu_Click">
+                                        Content="Administration"                                
+                                        Style="{StaticResource MenuButtonTheme}"
+                                        Click="btnMenu_Click">
                                 </Button>
                                 <StackPanel x:Name="stkSubAdministration"
-                                        Visibility="Collapsed"
-                                        Orientation="Vertical">
+                                            Visibility="Collapsed"
+                                            Orientation="Vertical">
                                     <Button Content="Add a new User"
-                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToAdminNewUserCommand}"></Button>
                                     <Button Content="Edit User"
-                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
                                     <Button Content="Remove User"
-                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
                                 </StackPanel>
                             </StackPanel>
 
                             <!--Account-->
                             <StackPanel Orientation="Vertical">
                                 <Button x:Name="btnAccount"
-                                    Content="Account"                                
-                                    Style="{StaticResource MenuButtonTheme}"
-                                    Click="btnMenu_Click">
+                                        Content="Account"                                
+                                        Style="{StaticResource MenuButtonTheme}"
+                                        Click="btnMenu_Click">
                                 </Button>
                                 <StackPanel x:Name="stkSubAccount"
-                                        Visibility="Collapsed"
-                                        Orientation="Vertical">
+                                            Visibility="Collapsed"
+                                            Orientation="Vertical">
                                     <Button Content="View Details"
-                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
                                     <Button Content="Edit Details"
-                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>
