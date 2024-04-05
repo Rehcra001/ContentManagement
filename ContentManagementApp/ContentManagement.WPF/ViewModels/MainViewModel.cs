@@ -8,6 +8,7 @@ namespace ContentManagement.WPF.ViewModels
         public INavigationService NavigationService { get; set; }
         public IUserService UserService { get; set; }
         public IUserDetailService UserDetailService { get; set; }
+        public IProcessJWTTokenService ProcessJWTTokenService { get; set; }
 
         private const string SHOW = "Visible";
         private const string HIDE = "Collapsed";
@@ -51,11 +52,13 @@ namespace ContentManagement.WPF.ViewModels
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
-                             IUserDetailService userDetailService)
+                             IUserDetailService userDetailService,
+                             IProcessJWTTokenService processJWTTokenService)
         {
             NavigationService = navigationService;
             UserService = userService;
             UserDetailService = userDetailService;
+            ProcessJWTTokenService = processJWTTokenService;
 
             //Subscribe to events
             SubscribeEvents();
@@ -99,6 +102,7 @@ namespace ContentManagement.WPF.ViewModels
                 MenuState = HIDE;
                 UserName = "";
                 UserDetailService.ClearUserDetails();
+                ProcessJWTTokenService.ClearJwtToken();
                 SetAdministrator();
             }
         }

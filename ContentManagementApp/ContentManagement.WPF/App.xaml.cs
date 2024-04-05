@@ -70,8 +70,8 @@ namespace ContentManagement.WPF
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IHttpClientService, HttpClientService>();
             services.AddSingleton<IUserDetailService, UserDetailService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddTransient<IProcessJWTTokenService, ProcessJWTTokenService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IProcessJWTTokenService, ProcessJWTTokenService>();
 
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
 

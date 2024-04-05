@@ -39,7 +39,7 @@
                        TextWrapping="Wrap"
                        TextAlignment="Center"/>
 
-            <TextBlock Text="Username"
+            <TextBlock Text="Username / Email"
                        Foreground="DarkGray"
                        FontSize="12"
                        FontWeight="Medium"
