@@ -60,6 +60,7 @@ namespace ContentManagement.WPF
 
             services.AddSingleton<MainViewModel>();
             services.AddTransient<LoginViewModel>();
+            services.AddTransient<HomeViewModel>();
 
             //Add appsettings.json Configuration
             services.AddSingleton(AddConfiguration());
@@ -69,7 +70,7 @@ namespace ContentManagement.WPF
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IHttpClientService, HttpClientService>();
             services.AddSingleton<IUserDetailService, UserDetailService>();
-            services.AddTransient<IUserService, UserService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddTransient<IProcessJWTTokenService, ProcessJWTTokenService>();
 
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
