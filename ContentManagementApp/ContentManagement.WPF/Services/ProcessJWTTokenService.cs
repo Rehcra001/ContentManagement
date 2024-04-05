@@ -1,5 +1,6 @@
 ﻿using ContentManagement.WPF.Services.Contracts;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net.Http.Headers;
 using System.Security.Claims;
 
 namespace ContentManagement.WPF.Services
@@ -9,10 +10,18 @@ namespace ContentManagement.WPF.Services
         private readonly IHttpClientService _httpClient;
         private readonly IUserDetailService _userDetail;
 
+        private const string SCHEMA = "Bearer";
+
         public ProcessJWTTokenService(IHttpClientService httpClient, IUserDetailService userDetail)
         {
             _httpClient = httpClient;
             _userDetail = userDetail;
+        }
+
+        public void ClearJwtToken()
+        {
+            //Clear out the Authorization header token
+            _httpClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(SCHEMA, ""); ;
         }
 
         public void ProcessJwtToken(string token)
@@ -21,11 +30,13 @@ namespace ContentManagement.WPF.Services
             token = token.Replace('"', ' ').Trim();
 
             // add to header
-            _httpClient.HttpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
+            _httpClient.HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(SCHEMA, token);
 
             // Add claims to user detail
             ProcessClaims(token);
         }
+
+
 
         private void ProcessClaims(string token)
         {

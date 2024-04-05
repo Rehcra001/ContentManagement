@@ -10,5 +10,6 @@ namespace ContentManagement.WPF.Services.Contracts
     public interface IProcessJWTTokenService
     {
         void ProcessJwtToken(string token);
+        void ClearJwtToken();
     }
 }
