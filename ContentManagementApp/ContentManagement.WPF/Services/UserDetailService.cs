@@ -7,5 +7,10 @@ namespace ContentManagement.WPF.Services
     {
         private UserDetailModel _userDetailModel = new UserDetailModel();
         public UserDetailModel UserDetailModel { get => _userDetailModel; set => _userDetailModel = value; }
+
+        public void ClearUserDetails()
+        {
+            UserDetailModel = new UserDetailModel();
+        }
     }
 }

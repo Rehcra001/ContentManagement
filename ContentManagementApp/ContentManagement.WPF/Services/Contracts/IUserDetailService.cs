@@ -10,5 +10,6 @@ namespace ContentManagement.WPF.Services.Contracts
     public interface IUserDetailService
     {
         UserDetailModel UserDetailModel { get; set; }
+        void ClearUserDetails();
     }
 }
