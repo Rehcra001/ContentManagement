@@ -65,6 +65,7 @@
   <ItemGroup>
     <Build Include="dto\tables\BlazorServerLogEvents.sql" />
     <Build Include="dto\tables\APILogEvents.sql" />
+    <Build Include="dto\tables\WPFLogEvents.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Publish Location\ContentManagement.LogsDatabase.publish.xml" />

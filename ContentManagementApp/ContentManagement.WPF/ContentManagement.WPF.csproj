@@ -9,12 +9,45 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\Archer.jpeg" />
+    <None Remove="Images\Archer.png" />
+    <None Remove="Images\Logo.png" />
+    <None Remove="Images\Password.png" />
+    <None Remove="Images\User.jpeg" />
+    <None Remove="Images\User.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.3" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Serilog" Version="3.1.1" />
+    <PackageReference Include="Serilog.Settings.Configuration" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.MSSqlServer" Version="6.6.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="7.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ContentManagement.DTOs\ContentManagement.DTOs.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\Archer.jpeg" />
+    <Resource Include="Images\Archer.png" />
+    <Resource Include="Images\Logo.png" />
+    <Resource Include="Images\Password.png" />
+    <Resource Include="Images\User.jpeg" />
+    <Resource Include="Images\User.png">
+      <CopyToOutputDirectory></CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -5,20 +5,103 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ContentManagement.WPF.Views"
         mc:Ignorable="d"
-        Title="MainView" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="100"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
+        Title="" 
+        Height="500"
+        Width="800"
+        MinHeight="450" 
+        MinWidth="450"
+        WindowStartupLocation="CenterScreen"
+        MouseDown="Window_MouseDown">
 
-        <StackPanel Grid.Column="0">
-            
-        </StackPanel>
+    <Border>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                <GradientStop Color="#462AD8" Offset="0"/>
+                <GradientStop Color="#1B1558" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
 
-        <ContentControl Grid.Column="1"
-                        Content="{Binding NavigationService.CurrentView}">
-            
-        </ContentControl>
-    </Grid>
+        <Border.Background>
+            <LinearGradientBrush StartPoint="0, 1" EndPoint="1, 0">
+                <GradientStop Color="#060531" Offset="0"/>
+                <GradientStop Color="#1B1558" Offset="0.5"/>
+            </LinearGradientBrush>
+        </Border.Background>
+        
+        <DockPanel>
+            <Border DockPanel.Dock="Left"
+                    BorderBrush="White"
+                    BorderThickness="0,0,1,0">
+                <StackPanel Width="150">
+                    <Grid Margin="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="2*"/>
+                        </Grid.ColumnDefinitions>
+    
+                        <!--Logo-->
+                        <Image Source="/Images/Logo.png" Width="30" Height="30" Grid.Column="0"/>
+                        <TextBlock Text="Rehcra Content Manager" 
+                                   Grid.Column="1" 
+                                   Grid.ColumnSpan="2"
+                                   TextWrapping="Wrap"
+                                   TextAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="12"/>
+                    </Grid>
+                    
+                    <!--Menu-->
+                    <!--Sub menu visibility controlled in the code behind module-->
+                    <StackPanel Margin="5, 50, 5, 0">
+                        
+                        <!--Administration-->
+                        <StackPanel Orientation="Vertical">
+                            <Button x:Name="btnAdministration"
+                                    Content="Administration"                                
+                                    Style="{StaticResource MenuButtonTheme}"
+                                    Click="btnMenu_Click">
+                            </Button>
+                            <StackPanel x:Name="stkSubAdministration"
+                                        Visibility="Collapsed"
+                                        Orientation="Vertical">
+                                <Button Content="Add a new User"
+                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                <Button Content="Edit User"
+                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                <Button Content="Remove User"
+                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <!--Account-->
+                        <StackPanel Orientation="Vertical">
+                            <Button x:Name="btnAccount"
+                                    Content="Account"                                
+                                    Style="{StaticResource MenuButtonTheme}"
+                                    Click="btnMenu_Click">
+                            </Button>
+                            <StackPanel x:Name="stkSubAccount"
+                                        Visibility="Collapsed"
+                                        Orientation="Vertical">
+                                <Button Content="View Details"
+                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                <Button Content="Edit Details"
+                                        Style="{StaticResource SubMenuButtonTheme}"></Button>
+                            </StackPanel>
+                        </StackPanel>
+
+                    </StackPanel>
+                </StackPanel>                    
+            </Border>
+
+            <Grid>
+                <ContentControl Content="{Binding NavigationService.CurrentView}"></ContentControl>
+            </Grid>
+
+        </DockPanel>
+    </Border>
+   
+
+    
 </Window>

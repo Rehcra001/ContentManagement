@@ -241,6 +241,7 @@ namespace ContentManagement.API.Controllers
                 new Claim(JwtRegisteredClaimNames.GivenName, applicationUser.FirstName),
                 new Claim(JwtRegisteredClaimNames.FamilyName, applicationUser.LastName),
                 new Claim("DisplayName", applicationUser.DisplayName),
+                new Claim("Role", await GetUserMainRole(applicationUser)),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(ClaimTypes.NameIdentifier, applicationUser.Id)
             };
@@ -260,6 +261,26 @@ namespace ContentManagement.API.Controllers
                 );
 
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
+        }
+
+        private async Task<string> GetUserMainRole(ApplicationUser user)
+        {
+            IList<string> roles = await _userManager.GetRolesAsync(user);
+
+            //Three levels of Roles
+            //in order of precedence
+            if (roles.Contains("Administrator"))
+            {
+                return "Administrator";
+            }
+            else if (roles.Contains("Author"))
+            {
+                return "Author";
+            }
+            else //(roles.Contains("User"))
+            {
+                return "User";
+            }
         }
     }
 }

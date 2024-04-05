@@ -24,5 +24,13 @@ namespace ContentManagement.WPF.Views
         {
             InitializeComponent();
         }
+
+        private void PasswordBox_PasswordEntered(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            {
+                ((dynamic)this.DataContext).UserSignIn.Password = ((PasswordBox)sender).Password;
+            }
+        }
     }
 }

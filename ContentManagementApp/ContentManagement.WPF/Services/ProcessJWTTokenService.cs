@@ -38,6 +38,7 @@ namespace ContentManagement.WPF.Services
             _userDetail.UserDetailModel.FirstName = claims.First(c => c.Type == "given_name").Value;
             _userDetail.UserDetailModel.LastName = claims.First(c => c.Type == "family_name").Value;
             _userDetail.UserDetailModel.DisplayName = claims.First(c => c.Type == "DisplayName").Value;
+            _userDetail.UserDetailModel.Role = claims.First(c => c.Type == "Role").Value;
         }
     }
 }

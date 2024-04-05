@@ -1,4 +1,5 @@
-﻿using ContentManagement.WPF.Core;
+﻿using ContentManagement.DTOs;
+using ContentManagement.WPF.Core;
 using ContentManagement.WPF.Services.Contracts;
 using System;
 using System.Collections.Generic;
@@ -11,15 +12,16 @@ namespace ContentManagement.WPF.ViewModels
     public class MainViewModel : ViewModel
     {
         public INavigationService NavigationService { get; set; }
+        public IUserService UserService { get; set; }
 
-        //public RelayCommand NavigateLoginCommand { get; set; }
-        public MainViewModel(INavigationService navigationService)
+        
+        public MainViewModel(INavigationService navigationService,IUserService userService)
         {
             NavigationService = navigationService;
+            UserService = userService;
 
-            NavigationService.NavigateTo<LoginViewModel>();
-
-            //NavigateLoginCommand = new RelayCommand(o => { NavigationService.NavigateTo<LoginViewModel>(); }, o => true);
-        }
+            //Open log in page
+            NavigationService.NavigateTo<LoginViewModel>();            
+        }        
     }
 }
