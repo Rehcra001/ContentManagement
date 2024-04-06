@@ -1,9 +1,4 @@
 ﻿using ContentManagement.WPF.Enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ContentManagement.WPF.Validators
 {
@@ -34,9 +29,9 @@ namespace ContentManagement.WPF.Validators
         {
             var roles = Enum.GetValues(typeof(Roles));
 
-            foreach (string roleName in roles)
+            foreach (var roleName in roles)
             {
-                if (role.Equals(roleName))
+                if (role.Equals(roleName.ToString()))
                 {
                     return true;
                 }
