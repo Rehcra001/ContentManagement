@@ -28,5 +28,16 @@ namespace ContentManagement.WPF.Validators
 
             return name.All(char.IsLetter);
         }
+
+        internal bool BeAValidRole(string role)
+        {
+            string[] roles = new string[] { "Administrator", "Author" };
+
+            if (roles.Contains(role))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

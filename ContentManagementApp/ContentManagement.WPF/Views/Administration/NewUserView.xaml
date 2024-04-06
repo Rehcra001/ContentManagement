@@ -5,8 +5,201 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ContentManagement.WPF.Views.Administration"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             FontSize="14">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!--Header-->
+        <TextBlock Grid.Column="1"
+                   Grid.Row="1"
+                   Text="Add a New User"
+                   Foreground="White"
+                   HorizontalAlignment="Center"
+                   FontSize="20"
+                   Margin="0,0,0,30"
+                   FontFamily="Montserrat"/>
+
+        <!--Email address-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Email Address:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <TextBox Text="{Binding NewUser.EmailAddress}" 
+                     Style="{StaticResource TextBoxTheme}"
+                     MinWidth="200"/>
+        </StackPanel>
+
+        <!--Confirm Email address-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Confirm Email Address:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <TextBox Text="{Binding NewUser.ConfirmEmailAddress}" 
+                     Style="{StaticResource TextBoxTheme}"
+                     MinWidth="200"/>
+        </StackPanel>
+
+        <!--Password-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="4"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Password:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <Border CornerRadius="5"
+                    Background="#555555"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <PasswordBox x:Name="pwbPassword" 
+                             Margin="1"
+                             BorderBrush="Transparent"
+                             Background="Transparent"
+                             VerticalContentAlignment="Center"
+                             Padding="1"
+                             Foreground="white"
+                             CaretBrush="White"             
+                             MinWidth="200"
+                             PasswordChanged="PasswordBox_PasswordEntered"/>
+            </Border>
+        </StackPanel>
+
+        <!--Confirm Password-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="5"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Confirm Password:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <Border CornerRadius="5"
+                    Background="#555555"
+                    BorderBrush="White"
+                    BorderThickness="1">
+                <PasswordBox x:Name="pwbConfirmPassword" 
+                             Margin="1"
+                             BorderBrush="Transparent"
+                             Background="Transparent"
+                             VerticalContentAlignment="Center"
+                             Padding="1"
+                             Foreground="white"
+                             CaretBrush="White"             
+                             MinWidth="200"
+                             PasswordChanged="PasswordBox_PasswordEntered"/>
+            </Border>
+
+        </StackPanel>
+
+        <!--First Name-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="6"
+                    Margin="0,0,0,10">
+            <TextBlock Text="First Name:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <TextBox Text="{Binding NewUser.FirstName}" 
+                     Style="{StaticResource TextBoxTheme}"
+                     MinWidth="200"/>
+        </StackPanel>
+
+        <!--Last Name-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="7"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Last Name:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <TextBox Text="{Binding NewUser.LastName}" 
+                     Style="{StaticResource TextBoxTheme}"
+                     MinWidth="200"/>
+        </StackPanel>
+
+        <!--Last Name-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="8"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Display Name:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <TextBox Text="{Binding NewUser.DisplayName}" 
+                     Style="{StaticResource TextBoxTheme}"
+                     MinWidth="200"/>
+        </StackPanel>
+
+        <!--Role-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Column="1"
+                    Grid.Row="9"
+                    Margin="0,0,0,10">
+            <TextBlock Text="Role:"
+                       Foreground="White"
+                       Margin="0,0,10,0"
+                       MinWidth="150"/>
+            <ComboBox Style="{StaticResource ComboBoxTheme}"
+                      ItemsSource="{Binding Roles}"
+                      SelectedItem="{Binding NewUser.Role}"
+                      ToolTip="Select a role from the drop down list"                      
+                      MinWidth="200"
+                      Foreground="White"
+                      FontSize="14">                
+            </ComboBox>
+        </StackPanel>
+
+
+        <Grid Grid.Column="1"
+                Grid.Row="10"
+              Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Save"
+                    Grid.Column="0"
+                    Width="100"
+                    Style="{StaticResource ButtonTheme}"
+                    Command="{Binding SaveUserCommand}"></Button>
+
+            <Button Content="Cancel / Close"
+                    Grid.Column="1"
+                    Width="100"
+                    Style="{StaticResource ButtonTheme}"
+                    Command="{Binding CancelUserCommand}"></Button>
+        </Grid>
+
     </Grid>
 </UserControl>

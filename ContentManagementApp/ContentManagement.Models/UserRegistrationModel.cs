@@ -6,6 +6,7 @@ namespace ContentManagement.Models
     {
         [Required]
         [EmailAddress]
+        [StringLength(100)]
         [Display(Name = "Email Address")]
         public string? EmailAddress { get; set; }
 
@@ -33,7 +34,7 @@ namespace ContentManagement.Models
         public string? DisplayName { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(100, MinimumLength = 3)]
         [Display(Name = "First Name")]
         public string? FirstName { get; set; }
 

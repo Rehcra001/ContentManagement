@@ -65,9 +65,25 @@ namespace ContentManagement.WPF.Services
                 OnLoggedInChanged?.Invoke(isLoggedIn);
         }
 
-        public Task<bool> RegisterNewUser(UserRegistrationDTO userRegistrationDTO)
+        public async Task<bool> RegisterNewUser(UserRegistrationDTO userRegistrationDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.PostAsJsonAsync<UserRegistrationDTO>("user/register", userRegistrationDTO);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                Log.Error(message);
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                throw;
+            }
         }
     }
 }

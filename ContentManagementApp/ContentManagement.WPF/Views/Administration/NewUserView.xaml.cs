@@ -24,5 +24,22 @@ namespace ContentManagement.WPF.Views.Administration
         {
             InitializeComponent();
         }
+
+        private void PasswordBox_PasswordEntered(object sender, RoutedEventArgs e)
+        {
+            if (this.DataContext != null)
+            {
+                string name = ((PasswordBox)sender).Name;
+                if (name.Equals(this.pwbPassword.Name))
+                {
+                    ((dynamic)this.DataContext).NewUser.Password = ((PasswordBox)sender).Password;
+                }
+                else
+                {
+                    ((dynamic)this.DataContext).NewUser.ConfirmPassword = ((PasswordBox)sender).Password;
+                }
+                
+            }
+        }
     }
 }

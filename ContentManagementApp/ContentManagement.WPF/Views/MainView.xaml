@@ -9,7 +9,7 @@
         Height="500"
         Width="800"
         MinHeight="450" 
-        MinWidth="450"
+        MinWidth="600"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown">
 
