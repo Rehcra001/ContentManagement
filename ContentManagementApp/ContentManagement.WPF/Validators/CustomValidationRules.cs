@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ContentManagement.WPF.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,12 +32,16 @@ namespace ContentManagement.WPF.Validators
 
         internal bool BeAValidRole(string role)
         {
-            string[] roles = new string[] { "Administrator", "Author" };
+            var roles = Enum.GetValues(typeof(Roles));
 
-            if (roles.Contains(role))
+            foreach (string roleName in roles)
             {
-                return true;
+                if (role.Equals(roleName))
+                {
+                    return true;
+                }
             }
+            
             return false;
         }
     }
