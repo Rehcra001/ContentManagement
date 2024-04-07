@@ -17,10 +17,14 @@
             <DataTemplate DataType="{x:Type TypeName=viewModels:HomeViewModel}">
                 <views:HomeView/>
             </DataTemplate>
+
             
             <!--Administration-->
             <DataTemplate DataType="{x:Type TypeName=adminViewModels:NewUserViewModel}">
                 <adminViews:NewUserView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type TypeName=adminViewModels:EditUserViewModel}">
+                <adminViews:EditUserView/>
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
