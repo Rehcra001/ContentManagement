@@ -38,5 +38,17 @@ namespace ContentManagement.API.Extensions
                 ConfirmPassword = changePasswordDTO.ConfirmPassword
             };
         }
+
+        public static UserModel ConvertToUserModel(this UserDTO userDTO)
+        {
+            return new UserModel
+            {
+                EmailAddress = userDTO.EmailAddress,
+                FirstName = userDTO.FirstName,
+                LastName = userDTO.LastName,
+                DisplayName = userDTO.DisplayName,
+                Role = userDTO.Role
+            };
+        }
     }
 }

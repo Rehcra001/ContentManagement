@@ -133,9 +133,28 @@ namespace ContentManagement.WPF.Services
             throw new NotImplementedException();
         }
 
-        public Task<UserDTO> UpdateUser(string email)
+        public async Task<bool> UpdateUser(UserDTO userDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.PutAsJsonAsync($"user/user/{userDTO.EmailAddress}", userDTO);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                    Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                throw;
+            }
         }
     }
 }

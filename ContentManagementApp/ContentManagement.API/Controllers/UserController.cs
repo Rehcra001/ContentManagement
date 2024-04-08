@@ -95,6 +95,54 @@ namespace ContentManagement.API.Controllers
             }
         }
 
+        [HttpPut]
+        [Authorize] // TODO - change to Authorize once tested
+        [Route("user/{email}")]
+        public async Task<ActionResult<bool>> UpdateUser(string email, [FromBody] UserDTO userDTO)
+        {
+            try
+            {
+                if (!email.Equals(userDTO.EmailAddress))
+                {
+                    _logger.Error("{emailId} does not match {bodyEmail}", email, userDTO.EmailAddress);
+                    return StatusCode(StatusCodes.Status400BadRequest, "Email error");
+                }
+
+                // Convert to model
+                UserModel userModel = userDTO.ConvertToUserModel();
+
+                //Validate
+                var validationErrors = ValidationHelper.Validate(userModel);
+                if (validationErrors.Count > 0)
+                {
+                    foreach (var error in validationErrors)
+                    {
+                        _logger.Error("Validation Error: {error}", error.ErrorMessage);
+                    }
+                    return StatusCode(StatusCodes.Status400BadRequest, "Validation Error");
+                }
+
+                //Save changes
+                bool succeeded = await _userRepository.UpdateUser(userModel);
+
+                if (succeeded)
+                {
+                    return Ok(succeeded);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Erorr");
+            }
+
+
+        }
+
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]

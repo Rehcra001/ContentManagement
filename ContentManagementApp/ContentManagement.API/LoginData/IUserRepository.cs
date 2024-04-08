@@ -7,7 +7,7 @@ namespace ContentManagement.API.LoginData
         Task<bool> RemoveUser();
         Task<UserModel> GetUser(string email);
         Task<IEnumerable<UserModel>> GetUsers();
-        Task<UserModel> UpdateUser(string email);
+        Task<bool> UpdateUser(UserModel user);
 
     }
 }

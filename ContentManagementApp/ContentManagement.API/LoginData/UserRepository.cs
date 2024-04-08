@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using ContentManagement.API.Helpers;
+using Serilog;
+using ILogger = Serilog.ILogger;
 
 namespace ContentManagement.API.LoginData
 {
@@ -9,11 +11,15 @@ namespace ContentManagement.API.LoginData
     {
         private readonly AccessDataContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ILogger _logger;
 
-        public UserRepository(AccessDataContext context, UserManager<ApplicationUser> userManager)
+        public UserRepository(AccessDataContext context,
+                              UserManager<ApplicationUser> userManager,
+                              ILogger logger)
         {
             _context = context;
             _userManager = userManager;
+            _logger = logger;
         }
 
         public async Task<UserModel> GetUser(string email)
@@ -62,9 +68,42 @@ namespace ContentManagement.API.LoginData
             throw new NotImplementedException();
         }
 
-        public Task<UserModel> UpdateUser(string email)
+        public async Task<bool> UpdateUser(UserModel user)
         {
-            throw new NotImplementedException();
+            
+            if (!String.IsNullOrWhiteSpace(user.EmailAddress))
+            {
+                try
+                {
+                    ApplicationUser? applicationUser = await _userManager.FindByEmailAsync(user.EmailAddress);
+
+
+                    if (applicationUser != null)
+                    {
+                        //Get roles
+                        var roles = await _userManager.GetRolesAsync(applicationUser);
+                        //remove roles
+                        await _userManager.RemoveFromRolesAsync(applicationUser, roles);
+                        //add role
+                        await _userManager.AddToRoleAsync(applicationUser, user.Role!);
+                        //update user detail
+                        applicationUser.FirstName = user.FirstName;
+                        applicationUser.LastName = user.LastName;
+                        applicationUser.DisplayName = user.DisplayName;
+
+                        _context.SaveChanges();
+                        return true;
+                    }
+
+                    return false;
+                }
+                catch (Exception ex)
+                {
+                    _logger.Error(ex, ex.Message);
+                    return false;
+                }                
+            }
+            return false;
         }
 
     }
