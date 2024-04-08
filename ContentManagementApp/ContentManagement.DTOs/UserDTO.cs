@@ -18,5 +18,12 @@ namespace ContentManagement.DTOs
         public string? LastName { get; set; }
 
         public string? Role { get; set; }
+
+        public string UserDescription
+        {
+            get { return (FirstName + " " + LastName + ": " + EmailAddress); }
+            //set { _userDescription = value; }
+        }
+
     }
 }
