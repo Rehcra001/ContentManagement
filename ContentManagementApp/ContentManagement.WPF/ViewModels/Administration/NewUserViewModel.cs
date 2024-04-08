@@ -49,6 +49,14 @@ namespace ContentManagement.WPF.ViewModels.Administration
             NavigationService = navigationService;
             UserService = userService;
 
+            AddRoles();
+
+            SaveUserCommand = new RelayCommand(SaveUser, CanSaveUser);
+            CancelUserCommand = new RelayCommand(CancelUser, CanCancelUser);
+        }
+
+        private void AddRoles()
+        {
             //add roles
             Roles = new ObservableCollection<string>();
             var roleValues = Enum.GetValues(typeof(Roles));
@@ -56,9 +64,6 @@ namespace ContentManagement.WPF.ViewModels.Administration
             {
                 Roles.Add(role.ToString()!);
             }
-
-            SaveUserCommand = new RelayCommand(SaveUser, CanSaveUser);
-            CancelUserCommand = new RelayCommand(CancelUser, CanCancelUser);
         }
 
         private bool CanCancelUser(object obj)
