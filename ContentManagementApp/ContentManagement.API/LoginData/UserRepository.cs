@@ -45,6 +45,7 @@ namespace ContentManagement.API.LoginData
                                join userRoles in _context.UserRoles on user.Id equals userRoles.UserId
                                join role in _context.Roles on userRoles.RoleId equals role.Id
                                where role.Name == "Administrator" || role.Name == "Author"
+                               orderby user.FirstName, user.LastName
                                select new UserModel
                                {
                                    EmailAddress = user.Email,
