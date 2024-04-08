@@ -1,8 +1,8 @@
 ﻿using ContentManagement.DTOs;
 using ContentManagement.WPF.Services.Contracts;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
-using System.Windows;
 using Log = Serilog.Log;
 
 
@@ -84,6 +84,58 @@ namespace ContentManagement.WPF.Services
                 Log.Error(ex, ex.Message);
                 throw;
             }
+        }
+
+        public Task<UserDTO> GetUser()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserDTO> GetUser(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetUsers()
+        {
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.GetAsync("user/users");
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return Enumerable.Empty<UserDTO>();
+                    }
+                    else
+                    {
+                        IEnumerable<UserDTO>? users = await httpResponseMessage.Content.ReadFromJsonAsync<IEnumerable<UserDTO>>();
+                        return users!;
+                    }                    
+                }
+                else
+                {
+                    var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                    Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
+                    return Enumerable.Empty<UserDTO>();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                throw;
+            }
+        }
+
+        public Task<bool> RemoveUser(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<UserDTO> UpdateUser(string email)
+        {
+            throw new NotImplementedException();
         }
     }
 }
