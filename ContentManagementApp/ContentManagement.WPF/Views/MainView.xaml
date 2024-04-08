@@ -75,7 +75,8 @@
                                             Style="{StaticResource SubMenuButtonTheme}"
                                             Command="{Binding NavigateToAdminNewUserCommand}"></Button>
                                     <Button Content="Edit User"
-                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToEditUserCommand}"></Button>
                                     <Button Content="Remove User"
                                             Style="{StaticResource SubMenuButtonTheme}"></Button>
                                 </StackPanel>
@@ -94,6 +95,8 @@
                                     <Button Content="View Details"
                                             Style="{StaticResource SubMenuButtonTheme}"></Button>
                                     <Button Content="Edit Details"
+                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                    <Button Content="Change Password"
                                             Style="{StaticResource SubMenuButtonTheme}"></Button>
                                 </StackPanel>
                             </StackPanel>

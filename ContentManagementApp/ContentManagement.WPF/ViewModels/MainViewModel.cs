@@ -52,6 +52,7 @@ namespace ContentManagement.WPF.ViewModels
         //commands
         public RelayCommand LogoutCommand { get; set; }
         public RelayCommand NavigateToAdminNewUserCommand { get; set; }
+        public RelayCommand NavigateToEditUserCommand { get; set; }
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
@@ -69,10 +70,21 @@ namespace ContentManagement.WPF.ViewModels
             //Commands
             LogoutCommand = new RelayCommand(Logout, CanLogout);
             NavigateToAdminNewUserCommand = new RelayCommand(NavigateToAdminNewUser, CanNavigateToAdminNewUser);
+            NavigateToEditUserCommand = new RelayCommand(NavigateToEditUser, CanNavigateToEditUser);
 
 
             //Open log in page
             NavigationService.NavigateTo<LoginViewModel>();            
+        }
+
+        private bool CanNavigateToEditUser(object obj)
+        {
+            return true;
+        }
+
+        private void NavigateToEditUser(object obj)
+        {
+            NavigationService.NavigateTo<EditUserViewModel>();
         }
 
         private bool CanNavigateToAdminNewUser(object obj)
