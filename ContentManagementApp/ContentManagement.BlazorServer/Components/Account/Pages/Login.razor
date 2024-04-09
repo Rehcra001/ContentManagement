@@ -113,6 +113,14 @@
             {
                 await CreatePerson(user);
             }
+            else
+            {
+                //Make sure display name is correct in case the user deleted his account 
+                //and added it again
+                //No person is ever removed from ContentManagementDB
+                //in order to preserve comments
+                await PersonService.UpdatePerson(user.Email);
+            }
 
             RedirectManager.RedirectTo(ReturnUrl);
         }
