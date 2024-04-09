@@ -96,7 +96,7 @@ namespace ContentManagement.API.Controllers
         }
 
         [HttpPut]
-        [Authorize] // TODO - change to Authorize once tested
+        [Authorize(Roles = "Administrator")]
         [Route("user/{email}")]
         public async Task<ActionResult<bool>> UpdateUser(string email, [FromBody] UserDTO userDTO)
         {
@@ -124,14 +124,23 @@ namespace ContentManagement.API.Controllers
 
                 //Save changes
                 bool succeeded = await _userRepository.UpdateUser(userModel);
+                PersonModel person = new PersonModel
+                {
+                    UserName = userModel.EmailAddress!,
+                    DisplayName = userModel.DisplayName!
+                };
 
-                if (succeeded)
+                bool updated = await _personRepository.UpdatePerson(person);
+
+                if (succeeded && updated)
                 {
                     return Ok(succeeded);
                 }
                 else
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+                    _logger.Information("Updated User = {succeeded}", succeeded);
+                    _logger.Information("Updated Person = {updated]", updated);
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error. Please see Log");
                 }
             }
             catch (Exception ex)

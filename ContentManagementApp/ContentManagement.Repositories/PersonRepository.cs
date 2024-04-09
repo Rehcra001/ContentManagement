@@ -64,5 +64,20 @@ namespace ContentManagement.Repositories
 
             return exists;
         }
+
+        public async Task<bool> UpdatePerson(PersonModel person)
+        {
+            bool updated = false;
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserName", person.UserName, DbType.String);
+            parameters.Add("@DisplayName", person.DisplayName, DbType.String);
+
+            using (SqlConnection connection = _sqlConnection.sqlConnection())
+            {
+                updated = await connection.QuerySingleAsync<bool>("dbo.usp_UpdatePerson", parameters, commandType: CommandType.StoredProcedure);
+            }
+
+            return updated;
+        }
     }
 }

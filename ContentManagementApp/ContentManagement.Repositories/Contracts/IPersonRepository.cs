@@ -11,5 +11,6 @@ namespace ContentManagement.Repositories.Contracts
     {
         Task<PersonModel> AddPerson(PersonModel person);
         Task<bool> PersonExists(string username);
+        Task<bool> UpdatePerson(PersonModel person);
     }
 }
