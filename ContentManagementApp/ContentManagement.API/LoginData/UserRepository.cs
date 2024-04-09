@@ -63,9 +63,24 @@ namespace ContentManagement.API.LoginData
             return users;
         }
 
-        public Task<bool> RemoveUser()
+        public async Task<bool> RemoveUser(string email)
         {
-            throw new NotImplementedException();
+            ApplicationUser? user = await _userManager.FindByEmailAsync(email);
+
+            if (user != null)
+            {
+                IdentityResult identityResult = await _userManager.DeleteAsync(user);
+
+                if (identityResult.Succeeded)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }                
+            }
+            return false;
         }
 
         public async Task<bool> UpdateUser(UserModel user)

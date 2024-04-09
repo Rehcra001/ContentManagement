@@ -53,7 +53,7 @@ namespace ContentManagement.WPF.Services
             }
             catch (Exception ex)
             {
-                // TODO - Log exception
+                //Log exception
                 Log.Error("Login Error: " + ex.Message);
                 throw;
             }

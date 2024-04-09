@@ -19,6 +19,12 @@ namespace ContentManagement.BlazorServer.Services
             _logger = logger;
         }
 
+        /// <summary>
+        /// Adds a person to the ContentManagementDB
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns>PersonModel</returns>
+        /// <exception cref="Exception"></exception>
         public async Task<PersonModel> AddPerson(PersonModel person)
         {
             try
@@ -29,7 +35,7 @@ namespace ContentManagement.BlazorServer.Services
                 {
 
 
-                    foreach(ValidationMessage message in validationErrors)
+                    foreach (ValidationMessage message in validationErrors)
                     {
                         _logger.Error("Validation Error: " + message.ToString());
 
@@ -47,19 +53,26 @@ namespace ContentManagement.BlazorServer.Services
                 }
                 catch (Exception ex)
                 {
-                    _logger.Error(ex.Message);
-                    throw;
+                    _logger.Error(ex, ex.Message);
+                    return new PersonModel();
                 }
 
                 await Log.CloseAndFlushAsync();
                 return person;
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                throw new Exception(e.Message);
+                //Log exception
+                _logger.Error(ex, ex.Message);
+                return new PersonModel();
             }
         }
 
+        /// <summary>
+        /// Check if a person already exists in ContentManagementDB
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns>Bool: True if a person exists. Otherwise false</returns>
         public async Task<bool> PersonExists(string username)
         {
             try
@@ -68,11 +81,31 @@ namespace ContentManagement.BlazorServer.Services
                 return exists;
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //Log exception
-                // TODO - Add logging functionality
-                throw;
+                _logger.Error(ex, ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Updates the person Display Name
+        /// </summary>
+        /// <param name="person"></param>
+        /// <returns>Bool: True if succeeded. False otherwise</returns>
+        public async Task<bool> UpdatePerson(PersonModel person)
+        {
+            try
+            {
+                bool updated = await _personRepository.UpdatePerson(person);
+                return updated;
+            }
+            catch (Exception ex)
+            {
+                //Log exception
+                _logger.Error(ex, ex.Message);
+                return false;
             }
         }
     }

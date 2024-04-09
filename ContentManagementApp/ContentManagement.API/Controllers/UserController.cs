@@ -69,6 +69,31 @@ namespace ContentManagement.API.Controllers
             }
         }
 
+        [HttpDelete]
+        [Authorize(Roles = "Administrator")]
+        [Route("deleteuser/{email}")]
+        public async Task<ActionResult<bool>> DeleteUser(string email)
+        {
+            try
+            {
+                bool deleted = await _userRepository.RemoveUser(email);
+
+                if (deleted)
+                {
+                    return Ok(deleted);
+                }
+                else
+                {
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error");
+            }
+        }
+
         [HttpGet]
         [Authorize(Roles = "Administrator")]
         [Route("Users")]
