@@ -26,6 +26,9 @@
             <DataTemplate DataType="{x:Type TypeName=adminViewModels:EditUserViewModel}">
                 <adminViews:EditUserView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type TypeName=adminViewModels:RemoveUserViewModel}">
+                <adminViews:RemoveUserView/>
+            </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Themes/ButtonTheme.xaml"/>

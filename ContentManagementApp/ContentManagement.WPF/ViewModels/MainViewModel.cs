@@ -27,7 +27,7 @@ namespace ContentManagement.WPF.ViewModels
             }
         }
 
-        private string _adminState;
+        private string _adminState = HIDE;
         public string AdminState
         {
             get { return _adminState; }
@@ -53,6 +53,7 @@ namespace ContentManagement.WPF.ViewModels
         public RelayCommand LogoutCommand { get; set; }
         public RelayCommand NavigateToAdminNewUserCommand { get; set; }
         public RelayCommand NavigateToEditUserCommand { get; set; }
+        public RelayCommand NavigateToRemoveUserCommand { get; set; }
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
@@ -71,10 +72,21 @@ namespace ContentManagement.WPF.ViewModels
             LogoutCommand = new RelayCommand(Logout, CanLogout);
             NavigateToAdminNewUserCommand = new RelayCommand(NavigateToAdminNewUser, CanNavigateToAdminNewUser);
             NavigateToEditUserCommand = new RelayCommand(NavigateToEditUser, CanNavigateToEditUser);
+            NavigateToRemoveUserCommand = new RelayCommand(NavigateToRemoveUser, CanNavigateToRemoveUser);
 
 
             //Open log in page
             NavigationService.NavigateTo<LoginViewModel>();            
+        }
+
+        private bool CanNavigateToRemoveUser(object obj)
+        {
+            return true;
+        }
+
+        private void NavigateToRemoveUser(object obj)
+        {
+            NavigationService.NavigateTo<RemoveUserViewModel>();
         }
 
         private bool CanNavigateToEditUser(object obj)
@@ -90,7 +102,7 @@ namespace ContentManagement.WPF.ViewModels
         private bool CanNavigateToAdminNewUser(object obj)
         {
             string? role = UserDetailService.UserDetailModel.Role;
-            if (role != null & role.Equals("Administrator"))
+            if (role != null && role.Equals("Administrator"))
             {
                 return true;
             }

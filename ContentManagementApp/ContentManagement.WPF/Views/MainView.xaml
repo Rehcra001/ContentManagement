@@ -78,7 +78,8 @@
                                             Style="{StaticResource SubMenuButtonTheme}"
                                             Command="{Binding NavigateToEditUserCommand}"></Button>
                                     <Button Content="Remove User"
-                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToRemoveUserCommand}"></Button>
                                 </StackPanel>
                             </StackPanel>
 

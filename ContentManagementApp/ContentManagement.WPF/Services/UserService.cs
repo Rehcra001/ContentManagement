@@ -128,9 +128,27 @@ namespace ContentManagement.WPF.Services
             }
         }
 
-        public Task<bool> RemoveUser(string email)
+        public async Task<bool> RemoveUser(string email)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.DeleteAsync($"user/deleteuser/{email}");
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    Log.Error("{user} was not deleted.", email);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                return false;
+            }
         }
 
         public async Task<bool> UpdateUser(UserDTO userDTO)
@@ -153,7 +171,7 @@ namespace ContentManagement.WPF.Services
             catch (Exception ex)
             {
                 Log.Error(ex, ex.Message);
-                throw;
+                return false;
             }
         }
     }

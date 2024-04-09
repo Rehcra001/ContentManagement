@@ -40,7 +40,8 @@ namespace ContentManagement.WPF.ViewModels.Administration
         public RelayCommand SaveUserCommand { get; set; }
         public RelayCommand CancelUserCommand { get; set; }
 
-        public EditUserViewModel(INavigationService navigationService, IUserService userService)
+        public EditUserViewModel(INavigationService navigationService,
+                                 IUserService userService)
         {
             NavigationService = navigationService;
             UserService = userService;
