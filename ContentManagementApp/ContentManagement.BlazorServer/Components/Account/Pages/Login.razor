@@ -115,11 +115,17 @@
             }
             else
             {
-                //Make sure display name is correct in case the user deleted his account 
+                //Make sure display name is correct in case the user deleted his account
                 //and added it again
                 //No person is ever removed from ContentManagementDB
                 //in order to preserve comments
-                await PersonService.UpdatePerson(user.Email);
+                PersonModel person = new PersonModel
+                    {
+                        UserName = user.Email,
+                        DisplayName = user.DisplayName
+                    };
+
+                await PersonService.UpdatePerson(person);
             }
 
             RedirectManager.RedirectTo(ReturnUrl);
@@ -144,7 +150,7 @@
     }
 
     private async Task CreatePerson(ApplicationUser user)
-    {        
+    {
         PersonModel person = new PersonModel
             {
                 UserName = user.UserName!,
