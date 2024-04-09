@@ -3,16 +3,10 @@ using ContentManagement.WPF.Core;
 using ContentManagement.WPF.Enums;
 using ContentManagement.WPF.Services.Contracts;
 using ContentManagement.WPF.Validators;
-using FluentValidation;
-using System;
-using System.Collections.Generic;
+using FluentValidation.Results;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using Log = Serilog.Log;
-using FluentValidation.Results;
 
 namespace ContentManagement.WPF.ViewModels.Administration
 {
