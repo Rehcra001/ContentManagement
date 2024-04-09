@@ -11,6 +11,7 @@ namespace ContentManagement.WPF.ViewModels.Administration
     {
         public INavigationService NavigationService { get; set; }
         public IUserService UserService { get; set; }
+        public IUserDetailService UserDetailService { get; set; }
 
         private UserDTO? _selectedUser;
         public UserDTO? SelectedUser
@@ -30,16 +31,17 @@ namespace ContentManagement.WPF.ViewModels.Administration
         public RelayCommand CancelUserCommand { get; set; }
 
         public RemoveUserViewModel(INavigationService navigationService,
-                                   IUserService userService)
+                                   IUserService userService,
+                                   IUserDetailService userDetailService)
         {
             NavigationService = navigationService;
             UserService = userService;
+            UserDetailService = userDetailService;
 
             RemoveUserCommand = new RelayCommand(RemoveUser, CanRemoveUser);
             CancelUserCommand = new RelayCommand(CancelUser, CanCancelUser);
 
             GetUsers();
-
         }
 
         private bool CanCancelUser(object obj)
@@ -54,7 +56,8 @@ namespace ContentManagement.WPF.ViewModels.Administration
 
         private bool CanRemoveUser(object obj)
         {
-            return SelectedUser != null;
+            //Logged in user cannot remove themself
+            return SelectedUser != null && !SelectedUser.EmailAddress!.Equals(UserDetailService.UserDetailModel.EmailAddress);
         }
 
         private async void RemoveUser(object obj)
