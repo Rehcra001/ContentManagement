@@ -98,7 +98,7 @@
                      IsReadOnly="True"/>
         </StackPanel>
 
-        <!--Last Name-->
+        <!--Display Name-->
         <StackPanel Orientation="Horizontal"
                      Grid.Column="1"
                      Grid.Row="6"
@@ -116,9 +116,9 @@
         <!--Role-->
         <StackPanel Orientation="Horizontal"
                      Grid.Column="1"
-                     Grid.Row="6"
+                     Grid.Row="7"
                      Margin="0,0,0,10">
-            <TextBlock Text="Display Name:"
+            <TextBlock Text="Role:"
                         Foreground="White"
                         Margin="0,0,10,0"
                         MinWidth="150"/>
