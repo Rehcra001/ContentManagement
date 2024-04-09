@@ -189,8 +189,7 @@ namespace ContentManagement.API.Controllers
                     PersonModel person = new PersonModel
                     {
                         DisplayName = userRegistrationModel.DisplayName!,
-                        UserName = userRegistrationModel.EmailAddress!,
-                        Role = userRegistrationModel.Role!
+                        UserName = userRegistrationModel.EmailAddress!
                     };
                     
                     // Add person to ContentManagementDB

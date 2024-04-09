@@ -82,5 +82,6 @@
     <Build Include="dto\Tables\Comments.sql" />
     <Build Include="dto\Stored Procedures\usp_AddPerson.sql" />
     <Build Include="dto\Stored Procedures\usp_PersonExists.sql" />
+    <Build Include="dto\Stored Procedures\usp_UpdatePerson.sql" />
   </ItemGroup>
 </Project>

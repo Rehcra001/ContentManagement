@@ -24,7 +24,6 @@ namespace ContentManagement.Repositories
             DynamicParameters parameters = new DynamicParameters();
             parameters.Add("@UserName", person.UserName, DbType.String);
             parameters.Add("@DisplayName", person.DisplayName, DbType.String);
-            parameters.Add("@Role", person.Role, DbType.String);
             
             using (SqlConnection connection = _sqlConnection.sqlConnection())
             {

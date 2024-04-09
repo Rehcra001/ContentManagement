@@ -136,13 +136,11 @@
     }
 
     private async Task CreatePerson(ApplicationUser user)
-    {
-        string role = await GetUserMainRole(user);
+    {        
         PersonModel person = new PersonModel
             {
                 UserName = user.UserName!,
-                DisplayName = user.DisplayName!,
-                Role = role
+                DisplayName = user.DisplayName!
             };
 
         try

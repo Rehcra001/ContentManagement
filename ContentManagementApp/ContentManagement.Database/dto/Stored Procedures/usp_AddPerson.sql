@@ -1,8 +1,7 @@
 ﻿CREATE PROCEDURE [dbo].[usp_AddPerson]
 (
 	@UserName NVARCHAR(100),
-	@DisplayName NVARCHAR(50),
-	@Role NVARCHAR(20)
+	@DisplayName NVARCHAR(50)
 )AS
 BEGIN
 	BEGIN TRY
@@ -14,12 +13,12 @@ BEGIN
 			BEGIN
 				DECLARE @Id INT;
 				
-				INSERT INTO dbo.People (UserName, DisplayName, Role)
-				VALUES (@UserName, @DisplayName, @Role);
+				INSERT INTO dbo.People (UserName, DisplayName)
+				VALUES (@UserName, @DisplayName);
 
 				SET @Id = SCOPE_IDENTITY();
 
-				SELECT Id, UserName, DisplayName, [Role]
+				SELECT Id, UserName, DisplayName
 				FROM dbo.People
 				WHERE Id = @Id;
 			END
