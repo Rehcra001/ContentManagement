@@ -82,7 +82,7 @@ namespace ContentManagement.WPF.ViewModels.Administration
 
             try
             {
-                bool succeeded = await UserService.UpdateUser(SelectedUser);
+                bool succeeded = await UserService.UpdateUser(SelectedUser.EmailAddress!, SelectedUser);
 
                 if (succeeded)
                 {

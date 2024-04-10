@@ -2,8 +2,10 @@
 using ContentManagement.WPF.Services;
 using ContentManagement.WPF.Services.Contracts;
 using ContentManagement.WPF.ViewModels;
+using ContentManagement.WPF.ViewModels.Account;
 using ContentManagement.WPF.ViewModels.Administration;
 using ContentManagement.WPF.Views;
+using ContentManagement.WPF.Views.Account;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
@@ -65,6 +67,7 @@ namespace ContentManagement.WPF
             services.AddTransient<NewUserViewModel>();
             services.AddTransient<EditUserViewModel>();
             services.AddTransient<RemoveUserViewModel>();
+            services.AddTransient<UserDetailViewModel>();
 
             //Add appsettings.json Configuration
             services.AddSingleton(AddConfiguration());

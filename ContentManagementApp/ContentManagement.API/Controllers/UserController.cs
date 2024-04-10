@@ -2,7 +2,7 @@
 using ContentManagement.API.LoginData;
 using ContentManagement.DTOs;
 using ContentManagement.Models;
-using ContentManagement.Models.ValidationClasses;
+using ContentManagement.API.ValidationClasses;
 using ContentManagement.Repositories.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -173,10 +173,56 @@ namespace ContentManagement.API.Controllers
                 _logger.Error(ex, ex.Message);
                 return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Erorr");
             }
-
-
         }
 
+        [HttpPut]
+        [Authorize]
+        [Route("user")]
+        public async Task<ActionResult<bool>> UpdateUser([FromBody] UserDTO userDTO)
+        {
+            try
+            {
+                // Convert to model
+                UserModel userModel = userDTO.ConvertToUserModel();
+
+                //Validate
+                var validationErrors = ValidationHelper.Validate(userModel);
+                if (validationErrors.Count > 0)
+                {
+                    foreach (var error in validationErrors)
+                    {
+                        _logger.Error("Validation Error: {error}", error.ErrorMessage);
+                    }
+                    return StatusCode(StatusCodes.Status400BadRequest, "Validation Error");
+                }
+
+                //Save changes
+                bool succeeded = await _userRepository.UpdateUser(userModel);
+                PersonModel person = new PersonModel
+                {
+                    UserName = userModel.EmailAddress!,
+                    DisplayName = userModel.DisplayName!
+                };
+
+                bool updated = await _personRepository.UpdatePerson(person);
+
+                if (succeeded && updated)
+                {
+                    return Ok(succeeded);
+                }
+                else
+                {
+                    _logger.Information("Updated User = {succeeded}", succeeded);
+                    _logger.Information("Updated Person = {updated]", updated);
+                    return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Error. Please see Log");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, ex.Message);
+                return StatusCode(StatusCodes.Status500InternalServerError, "Unexpected Erorr");
+            }
+        }
 
         [HttpPost]
         [Authorize(Roles = "Administrator")]
@@ -188,15 +234,19 @@ namespace ContentManagement.API.Controllers
 
             // Validate user registration model
             var registrationErrors = ValidationHelper.Validate(userRegistrationModel);
+            var returnErrors = new List<string>();
+
             if (registrationErrors.Count > 0)
             {
                 // Log validation errors
                 foreach (var error in registrationErrors)
                 {
                     _logger.Error(error.ErrorMessage!);
+                    returnErrors.Add(error.ErrorMessage!);
                 }
                 await Log.CloseAndFlushAsync();
-                return StatusCode(StatusCodes.Status400BadRequest, "Validation Error: See log for details");
+                
+                return StatusCode(StatusCodes.Status400BadRequest, returnErrors);
             }
 
             // Add new user to Access database

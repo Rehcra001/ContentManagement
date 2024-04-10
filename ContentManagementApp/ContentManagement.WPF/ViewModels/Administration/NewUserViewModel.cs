@@ -102,7 +102,8 @@ namespace ContentManagement.WPF.ViewModels.Administration
                 }
                 else
                 {
-                    MessageBox.Show("Unexpected Erorr: Please try again.\r\nIf this error persists please let your administrator know", "Save User", MessageBoxButton.OK, MessageBoxImage.Information);
+                    // Additional validation errors handled by UserService
+                    return;
                 }
             }
             catch (Exception ex)

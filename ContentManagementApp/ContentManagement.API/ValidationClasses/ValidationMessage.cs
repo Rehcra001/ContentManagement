@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ContentManagement.Models.ValidationClasses
+namespace ContentManagement.API.ValidationClasses
 {
     public class ValidationMessage
     {

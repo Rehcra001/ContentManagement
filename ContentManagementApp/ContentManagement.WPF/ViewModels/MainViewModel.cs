@@ -1,5 +1,6 @@
 ﻿using ContentManagement.WPF.Core;
 using ContentManagement.WPF.Services.Contracts;
+using ContentManagement.WPF.ViewModels.Account;
 using ContentManagement.WPF.ViewModels.Administration;
 using Log = Serilog.Log;
 
@@ -54,6 +55,7 @@ namespace ContentManagement.WPF.ViewModels
         public RelayCommand NavigateToAdminNewUserCommand { get; set; }
         public RelayCommand NavigateToEditUserCommand { get; set; }
         public RelayCommand NavigateToRemoveUserCommand { get; set; }
+        public RelayCommand NavigateToUserDetailCommand { get; set; }
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
@@ -73,10 +75,21 @@ namespace ContentManagement.WPF.ViewModels
             NavigateToAdminNewUserCommand = new RelayCommand(NavigateToAdminNewUser, CanNavigateToAdminNewUser);
             NavigateToEditUserCommand = new RelayCommand(NavigateToEditUser, CanNavigateToEditUser);
             NavigateToRemoveUserCommand = new RelayCommand(NavigateToRemoveUser, CanNavigateToRemoveUser);
+            NavigateToUserDetailCommand = new RelayCommand(NavigateToUserDetail, CanNavigateToUserDetail);
 
 
             //Open log in page
             NavigationService.NavigateTo<LoginViewModel>();            
+        }
+
+        private bool CanNavigateToUserDetail(object obj)
+        {
+            return true;
+        }
+
+        private void NavigateToUserDetail(object obj)
+        {
+            NavigationService.NavigateTo<UserDetailViewModel>();
         }
 
         private bool CanNavigateToRemoveUser(object obj)

@@ -4,10 +4,13 @@
              xmlns:viewModels="clr-namespace:ContentManagement.WPF.ViewModels"
              xmlns:views="clr-namespace:ContentManagement.WPF.Views"
              xmlns:adminViewModels="clr-namespace:ContentManagement.WPF.ViewModels.Administration"
-             xmlns:adminViews="clr-namespace:ContentManagement.WPF.Views.Administration">
+             xmlns:adminViews="clr-namespace:ContentManagement.WPF.Views.Administration"
+             xmlns:accountViewModels="clr-namespace:ContentManagement.WPF.ViewModels.Account"
+             xmlns:accountViews="clr-namespace:ContentManagement.WPF.Views.Account">
 
     <Application.Resources>
         <ResourceDictionary>
+            <!--Root-->
             <DataTemplate DataType="{x:Type TypeName=viewModels:MainViewModel}">
                 <views:MainView/>
             </DataTemplate>
@@ -28,6 +31,11 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type TypeName=adminViewModels:RemoveUserViewModel}">
                 <adminViews:RemoveUserView/>
+            </DataTemplate>
+            
+            <!--Account-->
+            <DataTemplate DataType="{x:Type TypeName=accountViewModels:UserDetailViewModel}">
+                <accountViews:UserDetailView/>
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>

@@ -3,6 +3,8 @@ using ContentManagement.WPF.Services.Contracts;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using Log = Serilog.Log;
 
 
@@ -75,9 +77,26 @@ namespace ContentManagement.WPF.Services
                 {
                     return true;
                 }
-                var message = await httpResponseMessage.Content.ReadAsStringAsync();
-                Log.Error(message);
-                return false;
+                else
+                {
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        // TODO - add any validation errors to message box
+                        var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
+                        string messages = "";
+                        foreach (string str in errors!)
+                        {
+                            messages += str + "\r\n";
+                        }
+                        MessageBox.Show(messages, "Validation Errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return false;
+                    }
+
+                    var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                    Log.Error(message);
+                    return false;
+                }
+                
             }
             catch (Exception ex)
             {
@@ -151,11 +170,47 @@ namespace ContentManagement.WPF.Services
             }
         }
 
+        /// <summary>
+        /// Updates a user where an administrator has change the users details. Required "Administrator" authorization
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        public async Task<bool> UpdateUser(string email, UserDTO userDTO)
+        {
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.PutAsJsonAsync($"user/user/{email}", userDTO);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                    Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Updates the logged in users details.
+        /// </summary>
+        /// <param name="userDTO"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
         public async Task<bool> UpdateUser(UserDTO userDTO)
         {
             try
             {
-                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.PutAsJsonAsync($"user/user/{userDTO.EmailAddress}", userDTO);
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.PutAsJsonAsync($"user/user", userDTO);
 
                 if (httpResponseMessage.IsSuccessStatusCode)
                 {

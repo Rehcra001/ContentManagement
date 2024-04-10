@@ -93,10 +93,9 @@
                                 <StackPanel x:Name="stkSubAccount"
                                             Visibility="Collapsed"
                                             Orientation="Vertical">
-                                    <Button Content="View Details"
-                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
-                                    <Button Content="Edit Details"
-                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                    <Button Content="User Details"
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToUserDetailCommand}"></Button>
                                     <Button Content="Change Password"
                                             Style="{StaticResource SubMenuButtonTheme}"></Button>
                                 </StackPanel>

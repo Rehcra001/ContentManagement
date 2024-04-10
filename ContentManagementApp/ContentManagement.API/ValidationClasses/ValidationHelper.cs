@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ContentManagement.Models.ValidationClasses
+namespace ContentManagement.API.ValidationClasses
 {
     public static class ValidationHelper
     {

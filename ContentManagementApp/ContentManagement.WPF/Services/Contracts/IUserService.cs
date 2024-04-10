@@ -11,6 +11,7 @@ namespace ContentManagement.WPF.Services.Contracts
         Task<UserDTO> GetUser(string email);
         Task<IEnumerable<UserDTO>> GetUsers();
         Task<bool> RemoveUser(string email);
+        Task<bool> UpdateUser(string email, UserDTO userDTO);
         Task<bool> UpdateUser(UserDTO userDTO);
 
         event Action<bool> OnLoggedInChanged;

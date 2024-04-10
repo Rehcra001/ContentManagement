@@ -83,5 +83,6 @@
     <Build Include="dto\Stored Procedures\usp_AddPerson.sql" />
     <Build Include="dto\Stored Procedures\usp_PersonExists.sql" />
     <Build Include="dto\Stored Procedures\usp_UpdatePerson.sql" />
+    <Build Include="dto\Stored Procedures\usp_GetPeople.sql" />
   </ItemGroup>
 </Project>
