@@ -10,6 +10,8 @@ namespace ContentManagement.Repositories.Contracts
     public interface IPersonRepository
     {
         Task<PersonModel> AddPerson(PersonModel person);
+        Task<IEnumerable<PersonModel>> GetPeople();
+        IEnumerable<PersonModel> GetPeople(string str = "");
         Task<bool> PersonExists(string username);
         Task<bool> UpdatePerson(PersonModel person);
     }

@@ -148,16 +148,16 @@
     private sealed class InputModel
     {
         [Required]
-        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
-        [User_UniqueDisplayName]
-        [Display(Name = "Display Name")]
-        public string DisplayName { get; set; } = string.Empty;
-
-        [Required]
         [EmailAddress]
         [User_UniqueEmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; } = "";
+
+        [Required]
+        [StringLength(50, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+        [User_UniqueDisplayName(nameof(Email))]
+        [Display(Name = "Display Name")]
+        public string DisplayName { get; set; } = string.Empty;        
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]

@@ -51,6 +51,31 @@ namespace ContentManagement.Repositories
             return person;
         }
 
+        public async Task<IEnumerable<PersonModel>> GetPeople()
+        {
+            IEnumerable<PersonModel> people = new List<PersonModel>();
+            using (SqlConnection connection = _sqlConnection.sqlConnection())
+            {
+                people = await connection.QueryAsync<PersonModel>("dbo.usp_GetPeople", commandType: CommandType.StoredProcedure);
+            }
+            return people;
+        }
+
+        /// <summary>
+        /// Get people synchronously
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public IEnumerable<PersonModel> GetPeople(string str = "")
+        {
+            IEnumerable<PersonModel> people = new List<PersonModel>();
+            using (SqlConnection connection = _sqlConnection.sqlConnection())
+            {
+                people = connection.Query<PersonModel>("dbo.usp_GetPeople", commandType: CommandType.StoredProcedure);
+            }
+            return people;
+        }
+
         public async Task<bool> PersonExists(string username)
         {
             bool exists = false;
