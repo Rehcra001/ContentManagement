@@ -1,6 +1,6 @@
 ﻿using ContentManagement.BlazorServer.Services.Contracts;
 using ContentManagement.Models;
-using ContentManagement.Models.ValidationClasses;
+using ContentManagement.BlazorServer.ValidationClasses;
 using ContentManagement.Repositories.Contracts;
 using Serilog;
 using ILogger = Serilog.ILogger;

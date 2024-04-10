@@ -1,8 +1,9 @@
 ﻿using ContentManagement.API.Extensions;
+using ContentManagement.API.Helpers;
 using ContentManagement.API.LoginData;
+using ContentManagement.API.ValidationClasses;
 using ContentManagement.DTOs;
 using ContentManagement.Models;
-using ContentManagement.API.ValidationClasses;
 using ContentManagement.Repositories.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,7 +15,6 @@ using System.Security.Claims;
 using System.Text;
 using Ilogger = Serilog.ILogger;
 using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
-using ContentManagement.API.Helpers;
 
 namespace ContentManagement.API.Controllers
 {
@@ -147,15 +147,29 @@ namespace ContentManagement.API.Controllers
                     return StatusCode(StatusCodes.Status400BadRequest, "Validation Error");
                 }
 
+                //Additional validation to ensure Display name is unique
+                var people = await _personRepository.GetPeople();
+                var person = people.FirstOrDefault(x => x.DisplayName.ToLower() == userModel.DisplayName.ToLower());
+                if (person != null)
+                {
+                    //check if emails are the same
+                    if (person.UserName != userModel.EmailAddress)
+                    {
+                        //Display name cannot be used
+                        List<string> error = new List<string>() { "Display name already exists. Please try a different name." };
+                        return StatusCode(StatusCodes.Status400BadRequest, error);
+                    }
+                }
+
                 //Save changes
                 bool succeeded = await _userRepository.UpdateUser(userModel);
-                PersonModel person = new PersonModel
+                PersonModel personUser = new PersonModel
                 {
                     UserName = userModel.EmailAddress!,
                     DisplayName = userModel.DisplayName!
                 };
 
-                bool updated = await _personRepository.UpdatePerson(person);
+                bool updated = await _personRepository.UpdatePerson(personUser);
 
                 if (succeeded && updated)
                 {
@@ -196,15 +210,29 @@ namespace ContentManagement.API.Controllers
                     return StatusCode(StatusCodes.Status400BadRequest, "Validation Error");
                 }
 
+                //Additional validation to ensure Display name is unique
+                var people = await _personRepository.GetPeople();
+                var person = people.FirstOrDefault(x => x.DisplayName.ToLower() == userModel.DisplayName.ToLower());
+                if (person != null)
+                {
+                    //check if emails are the same
+                    if (person.UserName != userModel.EmailAddress)
+                    {
+                        //Display name cannot be used
+                        List<string> error = new List<string>() { "Display name already exists. Please try a different name." };
+                        return StatusCode(StatusCodes.Status400BadRequest, error);
+                    }
+                }
+
                 //Save changes
                 bool succeeded = await _userRepository.UpdateUser(userModel);
-                PersonModel person = new PersonModel
+                PersonModel personUser = new PersonModel
                 {
                     UserName = userModel.EmailAddress!,
                     DisplayName = userModel.DisplayName!
                 };
 
-                bool updated = await _personRepository.UpdatePerson(person);
+                bool updated = await _personRepository.UpdatePerson(personUser);
 
                 if (succeeded && updated)
                 {
@@ -249,6 +277,20 @@ namespace ContentManagement.API.Controllers
                 return StatusCode(StatusCodes.Status400BadRequest, returnErrors);
             }
 
+            //Additional validation to ensure Display name is unique
+            var people = await _personRepository.GetPeople();
+            var person = people.FirstOrDefault(x => x.DisplayName.ToLower() == userRegistrationModel.DisplayName.ToLower());
+            if (person != null)
+            {
+                //check if emails are the same
+                if (person.UserName != userRegistrationModel.EmailAddress)
+                {
+                    //Display name cannot be used
+                    List<string> error = new List<string>() { "Display name already exists. Please try a different name." };
+                    return StatusCode(StatusCodes.Status400BadRequest, error);
+                }
+            }
+
             // Add new user to Access database
             ApplicationUser applicationUser = new ApplicationUser
             {
@@ -270,40 +312,44 @@ namespace ContentManagement.API.Controllers
                 //save user as a person in ContentManagementDB
                 try
                 {
-                    PersonModel person = new PersonModel
+                    PersonModel personUser = new PersonModel
                     {
                         DisplayName = userRegistrationModel.DisplayName!,
                         UserName = userRegistrationModel.EmailAddress!
                     };
                     
                     // Add person to ContentManagementDB
-                    person = await _personRepository.AddPerson(person);
+                    person = await _personRepository.AddPerson(personUser);
 
                 }
                 catch (Exception)
                 {
+                    List<string> errors = new List<string>();
                     // Log any exceptions
                     foreach (var error in userResult.Errors)
                     {
                         _logger.Error(error.Description);
+                        errors.Add(error.Description);
                     }
 
                     // Remove the the user from access control
                     await _userManager.DeleteAsync(applicationUser);
 
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Error saving user to database");
+                    return StatusCode(StatusCodes.Status400BadRequest, errors);
                 }
 
                 return Ok(new { userResult.Succeeded });
             }
             else
             {
+                List<string> errors = new List<string>();
                 foreach (var error in userResult.Errors)
                 {
                     _logger.Error(error.Description);
+                    errors.Add(error.Description);
                 }
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Error saving user to database");
+                return StatusCode(StatusCodes.Status400BadRequest, errors);
             }
         }
 
@@ -450,5 +496,7 @@ namespace ContentManagement.API.Controllers
 
             return new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken);
         }        
+
+
     }
 }

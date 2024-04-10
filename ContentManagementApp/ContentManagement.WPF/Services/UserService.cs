@@ -188,6 +188,19 @@ namespace ContentManagement.WPF.Services
                 }
                 else
                 {
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        // TODO - add any validation errors to message box
+                        var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
+                        string messages = "";
+                        foreach (string str in errors!)
+                        {
+                            messages += str + "\r\n";
+                        }
+                        MessageBox.Show(messages, "Validation Errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return false;
+                    }
+
                     var message = await httpResponseMessage.Content.ReadAsStringAsync();
                     Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
                     return false;
@@ -218,6 +231,19 @@ namespace ContentManagement.WPF.Services
                 }
                 else
                 {
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        // TODO - add any validation errors to message box
+                        var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
+                        string messages = "";
+                        foreach (string str in errors!)
+                        {
+                            messages += str + "\r\n";
+                        }
+                        MessageBox.Show(messages, "Validation Errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return false;
+                    }
+
                     var message = await httpResponseMessage.Content.ReadAsStringAsync();
                     Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
                     return false;
