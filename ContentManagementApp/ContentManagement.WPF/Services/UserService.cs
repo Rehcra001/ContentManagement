@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 using Log = Serilog.Log;
 
 
@@ -29,9 +28,43 @@ namespace ContentManagement.WPF.Services
 
         
 
-        public Task ChangeUserPassword(ChangePasswordDTO changePasswordDTO)
+        public async Task<bool> ChangeUserPassword(ChangePasswordDTO changePasswordDTO)
         {
-            throw new NotImplementedException();
+            try
+            {
+                HttpResponseMessage httpResponseMessage = await _httpClientService.HttpClient.PostAsJsonAsync<ChangePasswordDTO>("user/changepassword", changePasswordDTO);
+
+                if (httpResponseMessage.IsSuccessStatusCode)
+                {
+                    MessageBox.Show("Password successfully change", "Change Password", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return true;
+                }
+                else
+                {
+                    if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
+                    {
+                        // TODO - add any validation errors to message box
+                        var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
+                        string messages = "";
+                        foreach (string str in errors!)
+                        {
+                            messages += str + "\r\n";
+                        }
+                        MessageBox.Show(messages, "Validation Errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return false;
+                    }
+                    var message = await httpResponseMessage.Content.ReadAsStringAsync();
+                    Log.Error($"Http status: {httpResponseMessage.StatusCode} Message -{message}");
+                    MessageBox.Show(message, "Validation Errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, ex.Message);
+                MessageBox.Show(ex.Message, "Change Password", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
         }
 
         public async Task<bool> LoginUser(UserSignInDTO userSignInDTO)

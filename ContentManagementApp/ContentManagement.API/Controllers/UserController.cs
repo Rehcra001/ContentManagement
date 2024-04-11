@@ -409,15 +409,17 @@ namespace ContentManagement.API.Controllers
 
             //Validate model
             var changePasswordErrors = ValidationHelper.Validate(changePasswordModel);
+            List<string> validationErrors = new List<string>();
             if (changePasswordErrors.Count > 0)
             {
                 //log
                 foreach (var error in changePasswordErrors)
                 {
                     _logger.Error(error.ErrorMessage!);
+                    validationErrors.Add(error.ErrorMessage!);
                 }
 
-                return StatusCode(StatusCodes.Status400BadRequest, "Validation Errors: Please see log.");                
+                return StatusCode(StatusCodes.Status400BadRequest, validationErrors);                
             }
 
 

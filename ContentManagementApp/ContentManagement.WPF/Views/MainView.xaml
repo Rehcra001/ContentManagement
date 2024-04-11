@@ -97,7 +97,8 @@
                                             Style="{StaticResource SubMenuButtonTheme}"
                                             Command="{Binding NavigateToUserDetailCommand}"></Button>
                                     <Button Content="Change Password"
-                                            Style="{StaticResource SubMenuButtonTheme}"></Button>
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToChangePasswordCommand}"></Button>
                                 </StackPanel>
                             </StackPanel>
                         </StackPanel>

@@ -68,6 +68,7 @@ namespace ContentManagement.WPF
             services.AddTransient<EditUserViewModel>();
             services.AddTransient<RemoveUserViewModel>();
             services.AddTransient<UserDetailViewModel>();
+            services.AddTransient<ChangePasswordViewModel>();
 
             //Add appsettings.json Configuration
             services.AddSingleton(AddConfiguration());
