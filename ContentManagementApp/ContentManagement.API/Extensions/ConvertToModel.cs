@@ -50,5 +50,19 @@ namespace ContentManagement.API.Extensions
                 Role = userDTO.Role
             };
         }
+
+        public static CategoryModel ConvertToCategoryModel(this CategoryDTO categoryDTO)
+        {
+            return new CategoryModel
+            {
+                Id = categoryDTO.Id,
+                Name = categoryDTO.Name,
+                Description = categoryDTO.Description,
+                IsPublished = categoryDTO.IsPublished,
+                CreatedOn = categoryDTO.CreatedOn,
+                LastModified = categoryDTO.LastModified,
+                PublishedOn = categoryDTO.PublishedOn
+            };
+        }
     }
 }

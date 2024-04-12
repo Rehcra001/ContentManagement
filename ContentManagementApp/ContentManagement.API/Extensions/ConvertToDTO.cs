@@ -34,5 +34,34 @@ namespace ContentManagement.API.Extensions
 
             return userDTO;
         }
+
+        public static IEnumerable<CategoryDTO> ConvertToCategoryDTOs(this IEnumerable<CategoryModel> categoryModels)
+        {
+            return (from category in categoryModels
+                    select new CategoryDTO
+                    {
+                        Id = category.Id,
+                        Name = category.Name,
+                        Description = category.Description,
+                        IsPublished = category.IsPublished,
+                        CreatedOn = category.CreatedOn,
+                        LastModified = category.LastModified,
+                        PublishedOn = category.PublishedOn
+                    });
+        }
+
+        public static CategoryDTO ConvertToCategoryDTO(this CategoryModel categoryModel)
+        {
+            return new CategoryDTO
+            {
+                Id = categoryModel.Id,
+                Name = categoryModel.Name,
+                Description = categoryModel.Description,
+                IsPublished = categoryModel.IsPublished,
+                CreatedOn = categoryModel.CreatedOn,
+                LastModified = categoryModel.LastModified,
+                PublishedOn = categoryModel.PublishedOn
+            };
+        }
     }
 }
