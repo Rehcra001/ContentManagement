@@ -6,10 +6,10 @@
         xmlns:local="clr-namespace:ContentManagement.WPF.Views"
         mc:Ignorable="d"
         Title="" 
-        Height="500"
-        Width="800"
+        Height="600"
+        Width="900"
         MinHeight="450" 
-        MinWidth="600"
+        MinWidth="700"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown">
 
@@ -37,7 +37,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Width="150"
+                    <StackPanel Width="200"
                                 Grid.Row="0">
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
@@ -80,6 +80,9 @@
                                     <Button Content="Remove User"
                                             Style="{StaticResource SubMenuButtonTheme}"
                                             Command="{Binding NavigateToRemoveUserCommand}"></Button>
+                                    <Button Content="Category Management"
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToCategoryManagementCommand}"></Button>
                                 </StackPanel>
                             </StackPanel>
 

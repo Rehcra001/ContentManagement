@@ -10,6 +10,7 @@ namespace ContentManagement.Repositories.Contracts
     public interface ICategoryRepository
     {
         Task<CategoryModel> AddCategory(CategoryModel category);
+        Task<bool> CanDeleteCategory(int id);
         Task<bool> DeleteCategory(int id);
         Task<IEnumerable<CategoryModel>> GetCategories();
         Task<CategoryModel> GetCategory(int id);

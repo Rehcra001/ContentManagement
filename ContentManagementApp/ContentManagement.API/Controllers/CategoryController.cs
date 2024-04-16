@@ -79,7 +79,7 @@ namespace ContentManagement.API.Controllers
         // POST api/<CategoryController>
         [HttpPost]
         [Authorize(Roles = "Administrator")]
-        public async Task<ActionResult<bool>> Post([FromBody] CategoryDTO categoryDTO)
+        public async Task<ActionResult<CategoryDTO>> Post([FromBody] CategoryDTO categoryDTO)
         {
             try
             {
@@ -162,12 +162,21 @@ namespace ContentManagement.API.Controllers
         {
             try
             {
-                bool deleted = await _categoryRepository.DeleteCategory(id);
-                if (!deleted)
+                bool canDelete = await _categoryRepository.CanDeleteCategory(id);
+                if (canDelete)
                 {
-                    return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete");
+                    bool deleted = await _categoryRepository.DeleteCategory(id);
+                    if (!deleted)
+                    {
+                        return StatusCode(StatusCodes.Status500InternalServerError, "Failed to delete");
+                    }
+                    return Ok(deleted);
                 }
-                return Ok(deleted);
+                else
+                {
+                    //Not allowed to delete this category
+                    return BadRequest("This category may not be deleted");
+                }
             }
             catch (Exception ex)
             {

@@ -65,6 +65,29 @@ namespace ContentManagement.Repositories
             return category;
         }
 
+        public async Task<bool> CanDeleteCategory(int id)
+        {
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@CategoryId", id, DbType.Int32);
+            bool canDelete = false;
+
+            using (SqlConnection connection = _sqlConnection.sqlConnection())
+            {
+                try
+                {
+                    canDelete = await connection.QuerySingleAsync<bool>("dbo.usp_CanDeleteCategory", parameters, commandType: CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+
+                    _logger.Error(ex, ex.Message);
+                    return false;
+                }
+            }
+
+            return canDelete;
+        }
+
         public async Task<bool> DeleteCategory(int id)
         {
             DynamicParameters parameters = new DynamicParameters();

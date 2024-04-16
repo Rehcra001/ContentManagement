@@ -32,6 +32,9 @@
             <DataTemplate DataType="{x:Type TypeName=adminViewModels:RemoveUserViewModel}">
                 <adminViews:RemoveUserView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type TypeName=adminViewModels:CategoryManagementViewModel}">
+                <adminViews:CategoryManagementView/>
+            </DataTemplate>
             
             <!--Account-->
             <DataTemplate DataType="{x:Type TypeName=accountViewModels:UserDetailViewModel}">
@@ -48,6 +51,7 @@
                 <ResourceDictionary Source="Themes/TextBoxTheme.xaml"/>
                 <ResourceDictionary Source="Themes/PasswordBoxTheme.xaml"/>
                 <ResourceDictionary Source="Themes/ComboBoxTheme.xaml"/>
+                <ResourceDictionary Source="Themes/TextAreaTheme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
         

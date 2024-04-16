@@ -89,5 +89,6 @@
     <Build Include="dto\Stored Procedures\usp_DeleteCategory.sql" />
     <Build Include="dto\Stored Procedures\usp_GetCategories.sql" />
     <Build Include="dto\Stored Procedures\usp_UpdateCategory.sql" />
+    <Build Include="dto\Stored Procedures\usp_CanDeleteCategory.sql" />
   </ItemGroup>
 </Project>

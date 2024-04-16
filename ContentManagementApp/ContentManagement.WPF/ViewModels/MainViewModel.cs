@@ -57,6 +57,7 @@ namespace ContentManagement.WPF.ViewModels
         public RelayCommand NavigateToRemoveUserCommand { get; set; }
         public RelayCommand NavigateToUserDetailCommand { get; set; }
         public RelayCommand NavigateToChangePasswordCommand { get; set; }
+        public RelayCommand NavigateToCategoryManagementCommand { get; set; }
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
@@ -78,10 +79,21 @@ namespace ContentManagement.WPF.ViewModels
             NavigateToRemoveUserCommand = new RelayCommand(NavigateToRemoveUser, CanNavigateToRemoveUser);
             NavigateToUserDetailCommand = new RelayCommand(NavigateToUserDetail, CanNavigateToUserDetail);
             NavigateToChangePasswordCommand = new RelayCommand(NavigateToChangePassword, CanNavigateToChangePassword);
+            NavigateToCategoryManagementCommand = new RelayCommand(NavigateToCategoryManagement, CanNavigateToCategoryManagement);
 
 
             //Open log in page
             NavigationService.NavigateTo<LoginViewModel>();            
+        }
+
+        private bool CanNavigateToCategoryManagement(object obj)
+        {
+            return true;
+        }
+
+        private void NavigateToCategoryManagement(object obj)
+        {
+            NavigationService.NavigateTo<CategoryManagementViewModel>();
         }
 
         private bool CanNavigateToChangePassword(object obj)

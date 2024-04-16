@@ -39,5 +39,14 @@ namespace ContentManagement.WPF.Validators
             
             return false;
         }
+
+        internal bool BeAValidDate(DateTime date)
+        {
+            if (date != default)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

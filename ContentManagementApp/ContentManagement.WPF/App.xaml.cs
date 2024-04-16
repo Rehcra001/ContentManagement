@@ -69,6 +69,7 @@ namespace ContentManagement.WPF
             services.AddTransient<RemoveUserViewModel>();
             services.AddTransient<UserDetailViewModel>();
             services.AddTransient<ChangePasswordViewModel>();
+            services.AddTransient<CategoryManagementViewModel>();
 
             //Add appsettings.json Configuration
             services.AddSingleton(AddConfiguration());
@@ -80,6 +81,7 @@ namespace ContentManagement.WPF
             services.AddSingleton<IUserDetailService, UserDetailService>();
             services.AddSingleton<IUserService, UserService>();
             services.AddSingleton<IProcessJWTTokenService, ProcessJWTTokenService>();
+            services.AddTransient<ICategoryService, CategoryService>();
 
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
 
