@@ -72,8 +72,8 @@
     <Build Include="dto\Tables\People.sql" />
     <Build Include="dto\Tables\Categories.sql" />
     <Build Include="dto\Tables\Posts.sql" />
-    <Build Include="dto\Tables\VisualContent.sql" />
     <Build Include="dto\Tables\PostVisualContent.sql" />
+    <Build Include="dto\Tables\AuthorVisualContent.sql" />
     <Build Include="dto\Tables\PostSubCategories.sql" />
     <Build Include="dto\Tables\SubCategories.sql" />
     <Build Include="dto\Tables\Tags.sql" />
