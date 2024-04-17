@@ -21,7 +21,7 @@ namespace ContentManagement.Models
         public DateTime LastModified { get; set; }
         public DateTime PublishedOn { get; set; }
         public CategoryModel Category { get; set; } = new CategoryModel();
-        public IEnumerable<SubCategoryModel> SubCategories { get; set; } = new List<SubCategoryModel>();
+        public IEnumerable<PostSubCategoryModel> SubCategories { get; set; } = new List<PostSubCategoryModel>();
         public IEnumerable<VisualContentModel> VisualContents { get; set; } = new List<VisualContentModel>();
         public IEnumerable<PostTagModel> PostTags { get; set; } = new List<PostTagModel>();
         public IEnumerable<CommentModel> Comments { get; set; } = new List<CommentModel>();
