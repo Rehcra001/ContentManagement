@@ -64,5 +64,19 @@ namespace ContentManagement.API.Extensions
                 PublishedOn = categoryDTO.PublishedOn
             };
         }
+
+        public static SubCategoryModel ConvertToSubCategoryModel(this SubCategoryDTO subCategoryDTO)
+        {
+            return new SubCategoryModel
+            {
+                Id = subCategoryDTO.Id,
+                Name = subCategoryDTO.Name,
+                Description = subCategoryDTO.Description,
+                IsPublished = subCategoryDTO.IsPublished,
+                CreatedOn = subCategoryDTO.CreatedOn,
+                LastModified = subCategoryDTO.LastModified,
+                PublishedOn = subCategoryDTO.PublishedOn
+            };
+        }
     }
 }

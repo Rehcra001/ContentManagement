@@ -63,5 +63,34 @@ namespace ContentManagement.API.Extensions
                 PublishedOn = categoryModel.PublishedOn
             };
         }
+
+        public static IEnumerable<SubCategoryDTO> ConvertToSubCategoryDTOs(this IEnumerable<SubCategoryModel> subCategoryModels)
+        {
+            return (from subCategory in subCategoryModels
+                    select new SubCategoryDTO
+                    {
+                        Id = subCategory.Id,
+                        Name = subCategory.Name,
+                        Description = subCategory.Description,
+                        IsPublished = subCategory.IsPublished,
+                        CreatedOn = subCategory.CreatedOn,
+                        LastModified = subCategory.LastModified,
+                        PublishedOn = subCategory.PublishedOn
+                    });
+        }
+
+        public static SubCategoryDTO ConvertToSubCategoryDTO(this SubCategoryModel subCategoryModel)
+        {
+            return new SubCategoryDTO
+            {
+                Id = subCategoryModel.Id,
+                Name = subCategoryModel.Name,
+                Description = subCategoryModel.Description,
+                IsPublished = subCategoryModel.IsPublished,
+                CreatedOn = subCategoryModel.CreatedOn,
+                LastModified = subCategoryModel.LastModified,
+                PublishedOn = subCategoryModel.PublishedOn
+            };
+        }
     }
 }
