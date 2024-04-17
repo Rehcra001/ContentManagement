@@ -37,7 +37,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
-                    <StackPanel Width="200"
+                    <StackPanel Width="220"
                                 Grid.Row="0">
                         <Grid Margin="10">
                             <Grid.ColumnDefinitions>
@@ -83,6 +83,9 @@
                                     <Button Content="Category Management"
                                             Style="{StaticResource SubMenuButtonTheme}"
                                             Command="{Binding NavigateToCategoryManagementCommand}"></Button>
+                                    <Button Content="Sub Category Management"
+                                            Style="{StaticResource SubMenuButtonTheme}"
+                                            Command="{Binding NavigateToSubCategoryManagementCommand}"></Button>
                                 </StackPanel>
                             </StackPanel>
 

@@ -35,6 +35,9 @@
             <DataTemplate DataType="{x:Type TypeName=adminViewModels:CategoryManagementViewModel}">
                 <adminViews:CategoryManagementView/>
             </DataTemplate>
+            <DataTemplate DataType="{x:Type TypeName=adminViewModels:SubCategoryManagementViewModel}">
+                <adminViews:SubCategoryManagementView/>
+            </DataTemplate>
             
             <!--Account-->
             <DataTemplate DataType="{x:Type TypeName=accountViewModels:UserDetailViewModel}">
