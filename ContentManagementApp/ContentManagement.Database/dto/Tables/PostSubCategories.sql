@@ -1,10 +1,8 @@
 ﻿CREATE TABLE [dbo].[PostSubCategories]
 (
 	Id INT NOT NULL PRIMARY KEY IDENTITY,
-	[Name] NVARCHAR(100) NOT NULL,
-	[Description] NVARCHAR(250) NOT NULL,
-	IsPublished bit DEFAULT(0) NOT NULL,
-	CreatedOn DATETIME2 DEFAULT(GETDATE()) NOT NULL,
-	LastModified DATETIME2 NULL,
-	PublishedOn DATETIME2 NULL
+	PostId INT NOT NULL,
+	SubCategoryId INT NOT NULL,
+	CONSTRAINT FK_PostSubCategories_Posts_PostId FOREIGN KEY (PostId) REFERENCES dbo.Posts(Id),
+	CONSTRAINT FK_PostSubCategories_SubCategories_SubCategoryId FOREIGN KEY (SubCategoryId) REFERENCES dbo.SubCategories (Id)
 )
