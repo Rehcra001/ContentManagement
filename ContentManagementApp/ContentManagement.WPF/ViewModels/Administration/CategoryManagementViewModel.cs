@@ -171,7 +171,7 @@ namespace ContentManagement.WPF.ViewModels.Administration
                             SelectedCategory = Categories[0];
                         }
 
-                        MessageBox.Show("Category deleted", "Update Category", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Category deleted", "Delete Category", MessageBoxButton.OK, MessageBoxImage.Information);
                         SetViewState(VIEW);
                         return;
                     }
