@@ -43,7 +43,6 @@ namespace ContentManagement.WPF.Services
                 {
                     if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        // TODO - add any validation errors to message box
                         var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
                         string messages = "";
                         foreach (string str in errors!)
@@ -114,7 +113,6 @@ namespace ContentManagement.WPF.Services
                 {
                     if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        // TODO - add any validation errors to message box
                         var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
                         string messages = "";
                         foreach (string str in errors!)
@@ -223,7 +221,6 @@ namespace ContentManagement.WPF.Services
                 {
                     if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        // TODO - add any validation errors to message box
                         var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
                         string messages = "";
                         foreach (string str in errors!)
@@ -266,7 +263,6 @@ namespace ContentManagement.WPF.Services
                 {
                     if (httpResponseMessage.StatusCode == HttpStatusCode.BadRequest)
                     {
-                        // TODO - add any validation errors to message box
                         var errors = await httpResponseMessage.Content.ReadFromJsonAsync<List<string>>();
                         string messages = "";
                         foreach (string str in errors!)

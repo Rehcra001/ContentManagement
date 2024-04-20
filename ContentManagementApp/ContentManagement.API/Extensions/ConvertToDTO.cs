@@ -1,6 +1,5 @@
 ﻿using ContentManagement.DTOs;
 using ContentManagement.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace ContentManagement.API.Extensions
 {
@@ -91,6 +90,35 @@ namespace ContentManagement.API.Extensions
                 LastModified = subCategoryModel.LastModified,
                 PublishedOn = subCategoryModel.PublishedOn
             };
+        }
+
+        public static AuthorVisualContentDTO ConvertToAuthorVisualContentModel(this AuthorVisualContentModel authorVisualContentModel)
+        {
+            return new AuthorVisualContentDTO
+            {
+                Id = authorVisualContentModel.Id,
+                AuthorId = authorVisualContentModel.AuthorId,
+                Name = authorVisualContentModel.Name,
+                Description = authorVisualContentModel.Description,
+                FileName = authorVisualContentModel.FileName,
+                VisualContentType = authorVisualContentModel.VisualContentType,
+                IsHttpLink = authorVisualContentModel.IsHttpLink
+            };
+        }
+
+        public static IEnumerable<AuthorVisualContentDTO> ConvertToAuthorVisualContentDTOs(this IEnumerable<AuthorVisualContentModel> authorVisualContentModels)
+        {
+            return (from contentModel in authorVisualContentModels
+                    select new AuthorVisualContentDTO
+                    {
+                        Id = contentModel.Id,
+                        AuthorId = contentModel.AuthorId,
+                        Name = contentModel.Name,
+                        Description = contentModel.Description,
+                        FileName = contentModel.FileName,
+                        VisualContentType = contentModel.VisualContentType,
+                        IsHttpLink = contentModel.IsHttpLink
+                    });
         }
     }
 }

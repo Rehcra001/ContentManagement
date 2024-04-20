@@ -78,5 +78,19 @@ namespace ContentManagement.API.Extensions
                 PublishedOn = subCategoryDTO.PublishedOn
             };
         }
+
+        public static AuthorVisualContentModel ConvertToAuthorVisualContentModel(this AuthorVisualContentDTO authorVisualContentDTO)
+        {
+            return new AuthorVisualContentModel
+            {
+                Id = authorVisualContentDTO.Id,
+                AuthorId = authorVisualContentDTO.AuthorId,
+                Name = authorVisualContentDTO.Name,
+                Description = authorVisualContentDTO.Description,
+                FileName = authorVisualContentDTO.FileName,
+                VisualContentType = authorVisualContentDTO.VisualContentType,
+                IsHttpLink = authorVisualContentDTO.IsHttpLink
+            };
+        }
     }
 }

@@ -14,5 +14,7 @@ namespace ContentManagement.Repositories.Contracts
         IEnumerable<PersonModel> GetPeople(string str = "");
         Task<bool> PersonExists(string username);
         Task<bool> UpdatePerson(PersonModel person);
+        Task<PersonModel> GetPerson(string username);
+        Task<int> GetPersonId(string username);
     }
 }

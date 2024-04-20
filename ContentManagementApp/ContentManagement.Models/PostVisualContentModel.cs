@@ -6,18 +6,9 @@ namespace ContentManagement.Models
     {
         public int Id { get; set; }
         [Required]
-        public int AuthorId { get; set; }
+        public int PostId { get; set; }
         [Required]
-        [StringLength(100)]
-        public string Name { get; set; } = "";
-        [Required]
-        [StringLength(250)]
-        public string Description { get; set; } = "";
-        [Required]
-        [StringLength(250)]
-        public string ServerLocation { get; set; } = "";
-        [Required]
-        [StringLength(250)]
-        public string LocalLocation { get; set; } = "";
+        public int PostVisualContentId { get; set; }
+        public AuthorVisualContentModel PostVisualContent { get; set; } = new AuthorVisualContentModel();
     }
 }

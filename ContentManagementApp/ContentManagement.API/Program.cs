@@ -1,4 +1,6 @@
 using ContentManagement.API.LoginData;
+using ContentManagement.API.Services;
+using ContentManagement.API.Services.Contracts;
 using ContentManagement.Repositories;
 using ContentManagement.Repositories.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -71,6 +73,10 @@ builder.Services.AddScoped<IRelationalDBConnection, RelationalDBConnection>();
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ISubCategoryRepository, SubCategoryRepository>();
+builder.Services.AddScoped<IAuthorVisualContentRepository, AuthorVisualContentRepository>();
+
+//Services
+builder.Services.AddScoped<IAuthorVisualContentService, AuthorVisualContentService>();
 
 var app = builder.Build();
 

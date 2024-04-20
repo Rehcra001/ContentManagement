@@ -3,7 +3,7 @@
 	@SubCategoryId INT
 )AS
 BEGIN
-	DECLARE @CanDelete bit;
+	DECLARE @CanDelete BIT;
 
 	IF EXISTS (SELECT * FROM dbo.PostSubCategories WHERE SubCategoryId = @SubCategoryId)
 		BEGIN
@@ -16,6 +16,6 @@ BEGIN
 			SET @CanDelete = 1;
 		END;
 
-	SELECT @CanDelete AS CanDelete
+	SELECT @CanDelete AS CanDelete;
 END;
 GO

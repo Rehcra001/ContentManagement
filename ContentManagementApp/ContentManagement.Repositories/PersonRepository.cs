@@ -76,6 +76,32 @@ namespace ContentManagement.Repositories
             return people;
         }
 
+        public async Task<PersonModel> GetPerson(string username)
+        {
+            PersonModel person = new PersonModel();
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserName", username, DbType.String);
+
+            using (SqlConnection connection = _sqlConnection.sqlConnection())
+            {
+                person = await connection.QuerySingleAsync<PersonModel>("dbo.GetPerson", parameters, commandType: CommandType.StoredProcedure);
+            }
+            return person;
+        }
+
+        public async Task<int> GetPersonId(string username)
+        {
+            int id = 0;
+            DynamicParameters parameters = new DynamicParameters();
+            parameters.Add("@UserName", username, DbType.String);
+
+            using (SqlConnection connection = _sqlConnection.sqlConnection())
+            {
+                id = await connection.QuerySingleAsync<int>("dbo.usp_GetPersonIdFromUserName", parameters, commandType: CommandType.StoredProcedure);
+            }
+            return id;
+        }
+
         public async Task<bool> PersonExists(string username)
         {
             bool exists = false;
