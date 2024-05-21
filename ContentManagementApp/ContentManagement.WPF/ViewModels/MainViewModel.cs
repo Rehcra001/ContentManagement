@@ -2,6 +2,7 @@
 using ContentManagement.WPF.Services.Contracts;
 using ContentManagement.WPF.ViewModels.Account;
 using ContentManagement.WPF.ViewModels.Administration;
+using ContentManagement.WPF.ViewModels.ContentViewer;
 using Log = Serilog.Log;
 
 namespace ContentManagement.WPF.ViewModels
@@ -59,6 +60,7 @@ namespace ContentManagement.WPF.ViewModels
         public RelayCommand NavigateToChangePasswordCommand { get; set; }
         public RelayCommand NavigateToCategoryManagementCommand { get; set; }
         public RelayCommand NavigateToSubCategoryManagementCommand { get; set; }
+        public RelayCommand NavigateToContentViewerCommand { get; set; }
 
         public MainViewModel(INavigationService navigationService,
                              IUserService userService,
@@ -82,10 +84,21 @@ namespace ContentManagement.WPF.ViewModels
             NavigateToChangePasswordCommand = new RelayCommand(NavigateToChangePassword, CanNavigateToChangePassword);
             NavigateToCategoryManagementCommand = new RelayCommand(NavigateToCategoryManagement, CanNavigateToCategoryManagement);
             NavigateToSubCategoryManagementCommand = new RelayCommand(NavigateToSubCategoryManagement, CanNavigateToSubCategoryManagement);
+            NavigateToContentViewerCommand = new RelayCommand(NavigateToContentViewer, CanNavigateToContentViewer);
 
 
             //Open log in page
             NavigationService.NavigateTo<LoginViewModel>();            
+        }
+
+        private bool CanNavigateToContentViewer(object obj)
+        {
+            return true;
+        }
+
+        private void NavigateToContentViewer(object obj)
+        {
+            NavigationService.NavigateTo<ContentViewerViewModel>();
         }
 
         private bool CanNavigateToSubCategoryManagement(object obj)

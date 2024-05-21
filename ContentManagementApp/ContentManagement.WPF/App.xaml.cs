@@ -4,6 +4,7 @@ using ContentManagement.WPF.Services.Contracts;
 using ContentManagement.WPF.ViewModels;
 using ContentManagement.WPF.ViewModels.Account;
 using ContentManagement.WPF.ViewModels.Administration;
+using ContentManagement.WPF.ViewModels.ContentViewer;
 using ContentManagement.WPF.Views;
 using ContentManagement.WPF.Views.Account;
 using Microsoft.Extensions.Configuration;
@@ -71,6 +72,7 @@ namespace ContentManagement.WPF
             services.AddTransient<ChangePasswordViewModel>();
             services.AddTransient<CategoryManagementViewModel>();
             services.AddTransient<SubCategoryManagementViewModel>();
+            services.AddTransient<ContentViewerViewModel>();
 
             //Add appsettings.json Configuration
             services.AddSingleton(AddConfiguration());
@@ -84,6 +86,8 @@ namespace ContentManagement.WPF
             services.AddSingleton<IProcessJWTTokenService, ProcessJWTTokenService>();
             services.AddTransient<ICategoryService, CategoryService>();
             services.AddTransient<ISubCategoryService, SubCategoryService>();
+            services.AddTransient<IFileService, FileService>();
+            services.AddTransient<IAuthorVisualContentService, AuthorVisualContentService>();
 
             services.AddSingleton<Func<Type, ViewModel>>(serviceProvider => viewModelType => (ViewModel)serviceProvider.GetRequiredService(viewModelType));
 

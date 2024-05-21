@@ -11,4 +11,9 @@ namespace ContentManagement.WPF.Enums
         Administrator,
         Author
     }
+
+    public enum VisualContentType
+    {
+        Image
+    }
 }

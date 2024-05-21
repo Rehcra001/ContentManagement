@@ -23,18 +23,27 @@ namespace ContentManagement.API.Controllers
         }
 
         // GET: api/<AuthorVisualContentController>
-        [HttpGet("getall/{authorid}")]
+        [HttpGet("getall")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<AuthorVisualContentDTO>>> GetAll(int authorId)
+        public async Task<ActionResult<IEnumerable<AuthorVisualContentDTO>>> GetAll()
         {
             try
             {
-                IEnumerable<AuthorVisualContentDTO> authorVisualContents = await _authorVisualContentService.GetAllAuthorVisualContent(authorId);
-                if (authorVisualContents is null || authorVisualContents.Count() == 0)
+                string? username = GetAuthorisedUserEmail(HttpContext);
+                if (username != null || String.IsNullOrWhiteSpace(username) == false)
                 {
-                    return NoContent();
+                    IEnumerable<AuthorVisualContentDTO> authorVisualContents = await _authorVisualContentService.GetAllAuthorVisualContent(username);
+                    if (authorVisualContents is null || authorVisualContents.Count() == 0)
+                    {
+                        return NoContent();
+                    }
+                    return Ok(authorVisualContents);
                 }
-                return Ok(authorVisualContents);
+                else
+                {
+                    return BadRequest("User not found");
+                }
+
             }
             catch (Exception ex)
             {

@@ -5,7 +5,6 @@ namespace ContentManagement.Models
     public class AuthorVisualContentModel
     {
         public int Id { get; set; }
-        [Required]
         public int AuthorId { get; set; }
         [Required]
         [StringLength(100)]

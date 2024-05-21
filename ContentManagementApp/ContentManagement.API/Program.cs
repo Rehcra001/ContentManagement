@@ -77,6 +77,7 @@ builder.Services.AddScoped<IAuthorVisualContentRepository, AuthorVisualContentRe
 
 //Services
 builder.Services.AddScoped<IAuthorVisualContentService, AuthorVisualContentService>();
+builder.Services.AddScoped<IFileService, FileService>();
 
 var app = builder.Build();
 

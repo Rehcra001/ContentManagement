@@ -6,7 +6,9 @@
              xmlns:adminViewModels="clr-namespace:ContentManagement.WPF.ViewModels.Administration"
              xmlns:adminViews="clr-namespace:ContentManagement.WPF.Views.Administration"
              xmlns:accountViewModels="clr-namespace:ContentManagement.WPF.ViewModels.Account"
-             xmlns:accountViews="clr-namespace:ContentManagement.WPF.Views.Account">
+             xmlns:accountViews="clr-namespace:ContentManagement.WPF.Views.Account"
+             xmlns:contentViewModel="clr-namespace:ContentManagement.WPF.ViewModels.ContentViewer"
+             xmlns:contentView="clr-namespace:ContentManagement.WPF.Views.ContentViewer">
 
     <Application.Resources>
         <ResourceDictionary>
@@ -45,6 +47,11 @@
             </DataTemplate>
             <DataTemplate DataType="{x:Type TypeName=accountViewModels:ChangePasswordViewModel}">
                 <accountViews:ChangePasswordView/>
+            </DataTemplate>
+            
+            <!--Content viewer-->
+            <DataTemplate DataType="{x:Type TypeName=contentViewModel:ContentViewerViewModel}">
+                <contentView:ContentViewerView/>
             </DataTemplate>
 
             <ResourceDictionary.MergedDictionaries>

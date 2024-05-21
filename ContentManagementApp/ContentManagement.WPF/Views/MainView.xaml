@@ -7,9 +7,9 @@
         mc:Ignorable="d"
         Title="" 
         Height="600"
-        Width="900"
+        Width="1200"
         MinHeight="450" 
-        MinWidth="700"
+        MinWidth="1100"
         WindowStartupLocation="CenterScreen"
         MouseDown="Window_MouseDown">
 
@@ -107,8 +107,19 @@
                                             Command="{Binding NavigateToChangePasswordCommand}"></Button>
                                 </StackPanel>
                             </StackPanel>
+
+                            <!--Content Viewer-->
+                            <StackPanel Orientation="Vertical">
+                                <Button x:Name="btnContentViewer"
+                                        Content="Content Viewer"                                
+                                        Style="{StaticResource MenuButtonTheme}"
+                                        Command="{Binding NavigateToContentViewerCommand}">
+                                </Button>
+                            </StackPanel>
                         </StackPanel>
                     </StackPanel>
+                    
+                    <!--Log Out-->
                     <StackPanel Orientation="Vertical"
                                 Visibility="{Binding MenuState}"
                                 Grid.Row="1"

@@ -48,5 +48,14 @@ namespace ContentManagement.WPF.Validators
             }
             return false;
         }
+
+        internal bool BeAValidUrl(string fileName)
+        {
+            if (fileName.Substring(0, 7).ToLower().Equals("http://") || fileName.Substring(0, 8).ToLower().Equals("https://"))
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }

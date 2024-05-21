@@ -104,10 +104,12 @@ namespace ContentManagement.API.Services
             }
         }
 
-        public async Task<IEnumerable<AuthorVisualContentDTO>> GetAllAuthorVisualContent(int authorId)
+        public async Task<IEnumerable<AuthorVisualContentDTO>> GetAllAuthorVisualContent(string username)
         {
             try
             {
+                int authorId = await _personRepository.GetPersonId(username);
+
                 IEnumerable<AuthorVisualContentModel> authorVisualContentModels = await _authorVisualContentRepository.GetAllAuthorVisualContent(authorId);
                 if (authorVisualContentModels == null || authorVisualContentModels.Count() == 0)
                 {
